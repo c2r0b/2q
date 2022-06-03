@@ -19,7 +19,7 @@ export class ApolloApp extends LitElement {
     return html`
       <dl>
         <ul>
-          <li>Aiii</li>
+          <li>${this.query.data?.movies }</li>
         </ul>
         <dt>Pathname</dt>
         <dd>${this.query.data?.location?.pathname ?? '/'}</dd>

@@ -1,3 +1,9 @@
 query AppQuery {
   location @client { pathname }
+  movies {
+    title
+    actors {
+      name
+    }
+  }
 }

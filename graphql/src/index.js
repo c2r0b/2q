@@ -1,37 +1,32 @@
-const { ApolloServer } = require('apollo-server');
+const { Neo4jGraphQL } = require("@neo4j/graphql");
+const { ApolloServer, gql } = require("apollo-server");
+const neo4j = require("neo4j-driver");
 
-const typeDefs = require('./schema');
+const typeDefs = gql`
+    type Movie {
+        title: String
+        actors: [Actor!]! @relationship(type: "ACTED_IN", direction: IN)
+    }
 
+    type Actor {
+        name: String
+        movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
+    }
+`;
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
+const driver = neo4j.driver(
+  "neo4j+s://3856c2fd.databases.neo4j.io",
+  neo4j.auth.basic("neo4j", "KsPsMCF5eAFNDjOFq1MToGyzv3qogA-B9ptf6vOS9uU")
+);
 
-// Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
+const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  csrfPrevention: true,
-  dataSources: () => ({ 
-    muscleDatabase: new muscleDatabase(knexConfig)
-  })
-});
+neoSchema.getSchema().then((schema) => {
+  const server = new ApolloServer({
+      schema,
+  });
 
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  server.listen().then(({ url }) => {
+      console.log(`🚀 Server ready at ${url}`);
+  });
+})
