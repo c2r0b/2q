@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import "carbon-web-components/dist/checkbox.min.js";
 
 import style from './header.css';
 import shared from '../shared.css';
@@ -18,8 +19,10 @@ export class Header extends LitElement {
     return html`
       <header>
         Gemo
-        <input type="checkbox" @change="${this._handleEditToggle}"/>
-        <label>Edit</label>
+        <bx-checkbox
+          label-text="Edit"
+          @change="${this._handleEditToggle}"
+        ></bx-checkbox>
       </header>
     `;
   }

@@ -5,8 +5,8 @@ import { customElement, state } from 'lit/decorators.js';
 import { AppQuery } from './App.query.graphql';
 
 import "../header";
-import "../side-menu";
-import "../entries-list";
+import "../menu";
+import "../list";
 
 import style from './app.css';
 import shared from '../shared.css';

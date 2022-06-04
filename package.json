@@ -22,6 +22,7 @@
     "@apollo-elements/core": "^2.1.1",
     "@apollo/client": "^3.5.4",
     "apollo-server": "^3.8.1",
+    "carbon-web-components": "^1.21.0",
     "graphql": "^15.8.0",
     "pwa-helpers": "^0.9.1"
   },
