@@ -1,6 +1,7 @@
-import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client/core';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client/core';
 
 import { locationVar } from './router';
+import { selMovie } from './cache';
 
 const uri = 'http://localhost:4000/graphql';
 
@@ -14,25 +15,16 @@ const cache =
           location(): Location {
             return locationVar();
           },
+          selMovie: {
+            read() {
+              const sel = selMovie();
+              if (sel) return sel;
+              return locationVar().pathname?.replace("%20", " ")?.substring(1);
+            }
+          }
         },
       },
     },
   });
 
 export const client = new ApolloClient({ cache, link });
-
-
-client
-  .query({
-    query: gql`
-      query TestQuery {
-        movies {
-          title
-          actors {
-            name
-          }
-        }
-      }
-    `
-  })
-  .then(result => console.log(result));

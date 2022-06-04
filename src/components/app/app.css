@@ -1,3 +1,8 @@
 :host {
   display: block;
 }
+
+aside {
+  width: 300px;
+  float: left;
+}

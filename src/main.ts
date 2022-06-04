@@ -9,5 +9,5 @@ const clientWrapper = document.getElementById('client') as ApolloClientElement;
 
 clientWrapper.client = client;
 
-customElements.whenDefined('genmo-app')
+customElements.whenDefined('gemo-app')
   .then(() => document.body.removeAttribute('unresolved'));

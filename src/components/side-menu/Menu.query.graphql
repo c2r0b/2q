@@ -1,0 +1,8 @@
+query MenuQuery {
+  movies {
+    title
+    actors {
+      name
+    }
+  }
+}

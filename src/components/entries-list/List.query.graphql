@@ -1,0 +1,7 @@
+query ListQuery($where: MovieWhere) {
+  movies(where: $where) {
+    actors {
+      name
+    }
+  }
+}

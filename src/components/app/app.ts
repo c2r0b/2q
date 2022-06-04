@@ -1,8 +1,12 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html } from 'lit';
+import { state } from 'lit-element';
 import { ApolloQueryController } from '@apollo-elements/core';
 import { customElement } from 'lit/decorators.js';
 
 import { AppQuery } from './App.query.graphql';
+
+import "../side-menu";
+import "../entries-list";
 
 import style from './app.css';
 import shared from '../shared.css';
@@ -15,14 +19,22 @@ export class ApolloApp extends LitElement {
 
   query = new ApolloQueryController(this, AppQuery);
 
-  render(): TemplateResult {
+  @state()
+  private section: string = "";
+
+  _handleSectionChange(e) {
+    this.section = e.detail.message;
+  }
+
+  render() {
     return html`
       <dl>
-        <ul>
-          <li>${this.query.data?.movies }</li>
-        </ul>
-        <dt>Pathname</dt>
-        <dd>${this.query.data?.location?.pathname ?? '/'}</dd>
+        <aside>
+          <dt>Pathname</dt>
+          <dd>${this.query.data?.location?.pathname ?? '/'}</dd>
+          <side-menu @sectionChange="${this._handleSectionChange}"></side-menu>
+        </aside>
+        <entries-list section="${this.section}"></entries-list>
       </dl>
     `;
   }
