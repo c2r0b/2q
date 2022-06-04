@@ -29,8 +29,14 @@ type CreateResults {
   info: CreateInfo
 }
 
+type DeleteResults {
+  nodesDeleted: Int
+}
+
 type Mutation {
-  createSections: CreateResults
+  createSections(input: [SectionCreateInput]): CreateResults
+  updateSections(where: SectionWhere, update: SectionUpdateInput): CreateResults
+  deleteSections(where: SectionWhere): DeleteResults
 }
 
 type SectionWhere {
@@ -39,5 +45,9 @@ type SectionWhere {
 
 type SectionCreateInput {
   id: ID!
+  title: String!
+}
+
+type SectionUpdateInput {
   title: String!
 }
