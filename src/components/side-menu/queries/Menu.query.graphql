@@ -1,0 +1,6 @@
+query MenuQuery {
+  sections {
+    id
+    title
+  }
+}

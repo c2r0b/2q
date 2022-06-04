@@ -1,42 +1,39 @@
 import { ApolloQueryController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
-import { property, state } from 'lit-element';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
-import { ListQuery } from './List.query.graphql.js';
+import { ListQuery } from './queries/List.query.graphql.js';
 
 @customElement('entries-list')
 export class List extends LitElement {
-  @property({}) set section(section: String) {
-    this._section = section;
-    this.getData();
+  @property({}) set sectionId(id: String) {
+    this._sectionId = id;
+    this.updateData();
   }
-  private _section: String = "";
+  private _sectionId: String = "";
 
   query = new ApolloQueryController(this, ListQuery, {
     variables: this.getVariables()
   });
 
-  getVariables() {
+  private getVariables() {
     return {
       where: {
-        title: this._section
+        id: this._sectionId
       }
     };
   }
 
-  getData() {
+  private updateData() {
     this.query.refetch(this.getVariables());
   }
 
   render() {
-    const actors = this.query?.data?.movies[0]?.actors ?? [];
+    const sub = this.query?.data?.sections[0] ?? {};
     return html`
       <dl>
-        <p>${this._section}</p>
-        <ul>${actors.map(actor => html`
-          <li>${actor.name ?? ''}</li>
-        `)}
+        <p>${this._sectionId}</p>
+        <p>${sub.title}</p>
         </ul>
       </dl>
     `;

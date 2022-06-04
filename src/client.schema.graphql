@@ -10,23 +10,34 @@ type Location {
   protocol: String
 }
 
-type Movie {
-  title: String
-  actors: [Actor!]! @relationship(type: "ACTED_IN", direction: IN)
-}
-
-type Actor {
-  name: String
-  movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
+type Section {
+  id: ID!
+  title: String!
 }
 
 type Query {
-  location: Location,
-  selMovie: String,
-  movies: [Movie]
-  actors: [Actor],
+  location: Location
+  selMovie: String
+  sections: [Section]
 }
 
-type MovieWhere {
-  title: String
+type CreateInfo {
+  nodesCreated: Int
+}
+
+type CreateResults {
+  info: CreateInfo
+}
+
+type Mutation {
+  createSections: CreateResults
+}
+
+type SectionWhere {
+  id: ID!
+}
+
+type SectionCreateInput {
+  id: ID!
+  title: String!
 }

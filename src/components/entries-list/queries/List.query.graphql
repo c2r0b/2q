@@ -1,0 +1,5 @@
+query ListQuery($where: SectionWhere) {
+  sections(where: $where) {
+    title
+  }
+}

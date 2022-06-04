@@ -1,0 +1,7 @@
+mutation CreateSections($input: [SectionCreateInput!]!) {
+  createSections(input: $input) {
+    info {
+      nodesCreated
+    }
+  }
+}

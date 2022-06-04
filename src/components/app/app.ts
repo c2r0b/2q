@@ -1,10 +1,10 @@
 import { LitElement, html } from 'lit';
-import { state } from 'lit-element';
 import { ApolloQueryController } from '@apollo-elements/core';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 
 import { AppQuery } from './App.query.graphql';
 
+import "../header";
 import "../side-menu";
 import "../entries-list";
 
@@ -13,28 +13,40 @@ import shared from '../shared.css';
 
 @customElement('gemo-app')
 export class ApolloApp extends LitElement {
-  static readonly is = 'gemo-app';
-
   static readonly styles = [shared, style];
 
   query = new ApolloQueryController(this, AppQuery);
 
-  @state()
-  private section: string = "";
+  @state() private sectionId: String = "";
+  @state() private canEdit: boolean = false;
 
-  _handleSectionChange(e) {
-    this.section = e.detail.message;
+  private _handleSectionChange(e) {
+    this.sectionId = e.detail.message;
+  }
+
+  private _handleEditToggle(e) {
+    this.canEdit = e.detail.message;
   }
 
   render() {
     return html`
       <dl>
+        <top-header
+          @editToggle="${this._handleEditToggle}"
+        ></top-header>
         <aside>
           <dt>Pathname</dt>
           <dd>${this.query.data?.location?.pathname ?? '/'}</dd>
-          <side-menu @sectionChange="${this._handleSectionChange}"></side-menu>
+          <side-menu
+            .canEdit=${this.canEdit}
+            @sectionChange="${this._handleSectionChange}"
+          ></side-menu>
         </aside>
-        <entries-list section="${this.section}"></entries-list>
+        <container>
+          <entries-list
+            sectionId="${this.sectionId}"
+          ></entries-list>
+        </container>
       </dl>
     `;
   }
