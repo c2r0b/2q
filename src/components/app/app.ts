@@ -30,18 +30,18 @@ export class ApolloApp extends LitElement {
 
   render() {
     return html`
-      <dl>
+      <dl><aside>
+      <dt>Pathname</dt>
+      <dd>${this.query.data?.location?.pathname ?? '/'}</dd>
+      <side-menu
+        .canEdit=${this.canEdit}
+        @sectionChange="${this._handleSectionChange}"
+      ></side-menu>
+    </aside><h1 class="mx-auto my-4 py-4 text-center shadow-lg text-xl w-1/2">Hello, World!</h1>
         <top-header
           @editToggle="${this._handleEditToggle}"
         ></top-header>
-        <aside>
-          <dt>Pathname</dt>
-          <dd>${this.query.data?.location?.pathname ?? '/'}</dd>
-          <side-menu
-            .canEdit=${this.canEdit}
-            @sectionChange="${this._handleSectionChange}"
-          ></side-menu>
-        </aside>
+        
         <container>
           <entries-list
             sectionId="${this.sectionId}"

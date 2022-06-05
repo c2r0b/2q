@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import "carbon-web-components/dist/checkbox.min.js";
+
+import './editToggle';
 
 import style from './header.css';
 import shared from '../shared.css';
@@ -9,20 +10,11 @@ import shared from '../shared.css';
 export class Header extends LitElement {
   static readonly styles = [shared, style];
 
-  _handleEditToggle(e) {
-    this.dispatchEvent(new CustomEvent('editToggle',{
-      detail: { message: e.currentTarget.checked }
-    }));
-  }
-
   render() {
     return html`
       <header>
         Gemo
-        <bx-checkbox
-          label-text="Edit"
-          @change="${this._handleEditToggle}"
-        ></bx-checkbox>
+        <edit-toggle></edit-toggle>
       </header>
     `;
   }
