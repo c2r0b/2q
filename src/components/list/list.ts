@@ -29,11 +29,11 @@ export class List extends LitElement {
   }
 
   render() {
-    const sub = this.query?.data?.sections[0] ?? {};
+    const sub = this.query?.data?.sections[0];
     return html`
       <dl>
         <p>${this._sectionId}</p>
-        <p>${sub.title}</p>
+        <p>${sub?.title}</p>
         </ul>
       </dl>
     `;

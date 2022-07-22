@@ -14,11 +14,10 @@ export default {
   },
 
   plugins: [
+    postcss(),
     esbuild({ ts: true, minify: true }),
     resolve(),
     html(),
-    postcss(),
     litcss(),
   ],
 };
-

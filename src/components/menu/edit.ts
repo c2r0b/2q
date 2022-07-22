@@ -1,4 +1,4 @@
-import { ApolloMutationController, ApolloQueryController } from '@apollo-elements/core';
+import { ApolloMutationController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
