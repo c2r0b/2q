@@ -31,6 +31,10 @@ export class ApolloApp extends LitElement {
   render() {
     return html`
       <dl><aside>
+
+      <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
       <dt>Pathname</dt>
       <dd>${this.query.data?.location?.pathname ?? '/'}</dd>
       <side-menu
