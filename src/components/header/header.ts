@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 import './editToggle';
+import './userButton';
 
 import style from './header.css';
 import shared from '../shared.css';
@@ -15,6 +16,7 @@ export class Header extends LitElement {
       <header>
         Gemo
         <edit-toggle></edit-toggle>
+        <user-button/></user-button>
       </header>
     `;
   }

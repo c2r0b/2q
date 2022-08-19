@@ -1,46 +1,60 @@
-import { ApolloServer } from "apollo-server";
+import dotenv from "dotenv";
+dotenv.config();
+
+import { ApolloServer, AuthenticationError, gql } from "apollo-server";
 
 import { Neo4jGraphQL } from "@neo4j/graphql";
-import { Neo4jGraphQLAuthJWTPlugin } from "@neo4j/graphql-plugin-auth";
 import neo4j from "neo4j-driver";
 
-import { typeDefs } from "./schema";
+import isTokenValid from "./validate";
+
+import fs from "fs";
+import path from "path";
+
+const gqlWrapper = (...files) => {
+  return gql`${files}`;
+};
+
+const importFile = (file) => {
+  return fs.readFileSync(path.join(__dirname, file),"utf-8");
+};
+
+// function that imports .graphql files
+const importGql = (file) => {
+  return gqlWrapper(importFile(file));
+};
+
+// db auth
+const neo4jAuth = neo4j.auth.basic(
+  process.env.NEO4J_USER,
+  process.env.NEO4J_KEY
+);
 
 // setup neo4j connection parameters
 const driver = neo4j.driver(
-  "neo4j+s://01e5d20f.databases.neo4j.io",
-  neo4j.auth.basic("neo4j", "2SR-25B-H_I_oM2CoD9PAqCU8dq1fHa-XuWGHEC4zGE")
+  process.env.NEO4J_URI,
+  neo4jAuth
 );
+
+// load schema
+const typeDefs = importGql("./schema.graphql");
 
 // init neo4j connection
 const neoSchema = new Neo4jGraphQL({
   typeDefs,
-  driver,
-  plugins: {
-    auth: new Neo4jGraphQLAuthJWTPlugin({
-      secret: "super-secret"
-    })
-  }
+  driver
 });
 
-// function to retrieve a user object given a token
-const getUser = (token) => {
-  return { isAuthenticated: true };
-};
 
 // startup server
 neoSchema.getSchema().then((schema) => {
 	const server = new ApolloServer({
 		schema,
     context: ({ req }) => {
-      // get the user token from the headers.
-      const token = req.headers.authorization || '';
-   
-      // try to retrieve a user with the token
-      const user = getUser(token);
-      
-      // add the user to the context
-      return { user };
+      if (!isTokenValid(req.headers.authorization)) {
+        throw new AuthenticationError("Invalid token");
+      }
+      return { req }
     },
 	});
 

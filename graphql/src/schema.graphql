@@ -1,0 +1,4 @@
+type Section {
+	id: ID!
+	title: String!
+}

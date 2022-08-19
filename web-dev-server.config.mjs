@@ -4,6 +4,8 @@ import { resolveCodegenPlugin } from '@apollo-elements/create/helpers.js';
 
 import _litcss from 'rollup-plugin-lit-css';
 
+import { buildConfig } from './esbuild.config.js';
+
 const litcss = fromRollup(_litcss);
 
 export default {
@@ -16,7 +18,7 @@ export default {
     'src/style.css': 'css',
   },
   plugins: [
-    esbuildPlugin({ ts: true }),
+    esbuildPlugin(buildConfig(true)),
     resolveCodegenPlugin({ ts: true }),
     litcss({
       include: 'src/components/**/*.css',
