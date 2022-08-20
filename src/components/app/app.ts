@@ -35,14 +35,16 @@ export class ApolloApp extends LitElement {
         redirect_uri: window.location.origin
       });
     }
-    localStorage.setItem("token", await this._auth.getTokenSilently());
+    localStorage.setItem('token', await this._auth.getTokenSilently());
     this.isAuthenticated = true;
   }
 
   private async buildauth() {
     this._auth = await createAuth0Client({
       domain: process.env.AUTH0_DOMAIN,
-      client_id: process.env.AUTH0_CLIENT_ID
+      client_id: process.env.AUTH0_CLIENT_ID,
+      audience: process.env.AUTH0_AUDIENCE,
+      cacheLocation: "localstorage"
     });
   }
 

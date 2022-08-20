@@ -766,6 +766,25 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
+"@fortawesome/fontawesome-common-types@6.1.2":
+  "integrity" "sha512-wBaAPGz1Awxg05e0PBRkDRuTsy4B3dpBm+zreTTyd9TH4uUM27cAL4xWyWR0rLJCrRwzVsQ4hF3FvM6rqydKPA=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.1.2.tgz"
+  "version" "6.1.2"
+
+"@fortawesome/fontawesome-svg-core@^6.1.2", "@fortawesome/fontawesome-svg-core@>= 1.2.0 < 7.0":
+  "integrity" "sha512-853G/Htp0BOdXnPoeCPTjFrVwyrJHpe8MhjB/DYE9XjwhnNDfuBCd3aKc2YUYbEfHEcBws4UAA0kA9dymZKGjA=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.1.2.tgz"
+  "version" "6.1.2"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.1.2"
+
+"@fortawesome/free-solid-svg-icons@^6.1.2":
+  "integrity" "sha512-lTgZz+cMpzjkHmCwOG3E1ilUZrnINYdqMmrkv30EC3XbRsGlbIOL8H9LaNp5SV4g0pNJDfQ4EdTWWaMvdwyLiQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.1.2.tgz"
+  "version" "6.1.2"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.1.2"
+
 "@graphql-codegen/add@^3.1.1":
   "integrity" "sha512-XkVwcqosa0CVBlL1HaQT0gp+EUfhuQE3LzrEpzMQLwchxaj/NPVYtOJL6MUHaYDsHzLqxWrufjfbeB3y2NQgRw=="
   "resolved" "https://registry.npmjs.org/@graphql-codegen/add/-/add-3.1.1.tgz"
@@ -1382,6 +1401,11 @@
     "eslint-plugin-json" "^3.1.0"
     "eslint-plugin-lit-a11y" "^1.0.1"
     "eslint-plugin-no-only-tests" "^2.6.0"
+
+"@riovir/wc-fontawesome@^0.1.9":
+  "integrity" "sha512-s9gQ8BjxLrNW6O1ZyBLmj0s+JbWHmyk6t3tGLF9H/wRgLcT+WacfK+b3B0AGDtGrmoNRE2dyl9/eySJNBOvcPw=="
+  "resolved" "https://registry.npmjs.org/@riovir/wc-fontawesome/-/wc-fontawesome-0.1.9.tgz"
+  "version" "0.1.9"
 
 "@rollup/plugin-node-resolve@^11.x":
   "integrity" "sha512-yc2n43jcqVyGE2sqV5/YCmocy9ArjVAP/BeXyTtADTBBX6V0e5UMqwO8CdQ0kzjb6zu5P1qMzsScCMRvE9OlVg=="

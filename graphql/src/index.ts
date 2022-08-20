@@ -50,10 +50,14 @@ const neoSchema = new Neo4jGraphQL({
 neoSchema.getSchema().then((schema) => {
 	const server = new ApolloServer({
 		schema,
-    context: ({ req }) => {
-      if (!isTokenValid(req.headers.authorization)) {
-        throw new AuthenticationError("Invalid token");
+    context: async ({ req }) => {
+      const token = req.headers.authorization;
+      const { error } = await isTokenValid(token);
+
+      if (error) {
+        throw new AuthenticationError(error);
       }
+      
       return { req }
     },
 	});

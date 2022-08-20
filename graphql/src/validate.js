@@ -36,7 +36,7 @@ async function isTokenValid(token) {
         }
       );
     });
-    
+
     return result;
   }
 

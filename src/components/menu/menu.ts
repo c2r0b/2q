@@ -1,7 +1,9 @@
-import { ApolloMutationController, ApolloQueryController } from '@apollo-elements/core';
+import { ApolloQueryController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { selMovie } from '../../cache.js';
+
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 import "./add.ts";
 import "./edit.ts";
@@ -36,6 +38,7 @@ export class Menu extends LitElement {
           ${sections.map(s => {
             return html`
               <li @click="${() => this.onMenuEntryClick(s.id)}">
+                <fa-icon .icon=${faCamera}></fa-icon>
                 ${s.title}
                 <div ?hidden=${!this.canEdit}>
                 <edit-btn
