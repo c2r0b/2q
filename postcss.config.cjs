@@ -1,11 +1,8 @@
-const tailwindcss = require("tailwindcss");
-const autoprefixer = require("autoprefixer");
-const postcssPresetEnv = require("postcss-preset-env");
-
 module.exports = {
-  plugins: [
-    postcssPresetEnv(),
-    tailwindcss("./tailwind.config.cjs"),
-    autoprefixer()
-  ],
+	inject: false,
+	plugins: [
+			require("tailwindcss")('./tailwind.config.cjs'),
+			require("autoprefixer")(),
+			require("postcss-discard-comments")({ removeAll: true })
+	]
 };

@@ -1,7 +1,9 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
 import html from '@web/rollup-plugin-html';
-import litcss from 'rollup-plugin-lit-css';
+
+import postcss from 'rollup-plugin-postcss';
+import postcssLit from 'rollup-plugin-postcss-lit';
 
 import { buildConfig } from './esbuild.config.js';
 
@@ -18,6 +20,7 @@ export default {
     esbuild(buildConfig(false)),
     resolve(),
     html(),
-    litcss(),
+    postcss(),
+    postcssLit()
   ],
 };

@@ -34,7 +34,6 @@ export class List extends LitElement {
       <dl>
         <p>${this._sectionId}</p>
         <p>${sub?.title}</p>
-        </ul>
       </dl>
     `;
   }

@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "inlineSources": true,
-    "module": "es2020",
+    "module": "esnext",
     "moduleResolution": "Node",
     "sourceMap": true,
     "target": "esnext",

@@ -2,11 +2,13 @@ import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { fromRollup } from '@web/dev-server-rollup';
 import { resolveCodegenPlugin } from '@apollo-elements/create/helpers.js';
 
-import _litcss from 'rollup-plugin-lit-css';
+import rollupPostcss from 'rollup-plugin-postcss';
+import rollupPostcssLit from 'rollup-plugin-postcss-lit';
 
 import { buildConfig } from './esbuild.config.js';
 
-const litcss = fromRollup(_litcss);
+const postcssPlugin = fromRollup(rollupPostcss);
+const postcssLitPlugin = fromRollup(rollupPostcssLit);
 
 export default {
   nodeResolve: true,
@@ -20,9 +22,7 @@ export default {
   plugins: [
     esbuildPlugin(buildConfig(true)),
     resolveCodegenPlugin({ ts: true }),
-    litcss({
-      include: 'src/components/**/*.css',
-      exclude: ['src/style.css'],
-    }),
+    postcssPlugin(),
+    postcssLitPlugin()
   ],
 };
