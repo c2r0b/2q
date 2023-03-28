@@ -3,21 +3,26 @@ import { customElement } from 'lit/decorators.js';
 
 import './editToggle';
 import './userButton';
+import './systemButton';
 
-import style from './header.css';
 import shared from '../shared.css';
 
 @customElement('top-header')
 export class Header extends LitElement {
-  static readonly styles = [shared, style];
+  static readonly styles = [shared];
 
   render() {
     return html`
-      <header>
-        Gemo
-        <edit-toggle></edit-toggle>
-        <user-button/></user-button>
-      </header>
+      <div class="navbar bg-base-100">
+        <div class="flex-1">
+          <a class="btn btn-ghost normal-case text-xl">My First App</a>
+        </div>
+        <div class="flex-none">
+          <edit-toggle></edit-toggle>
+          <system-button></system-button>
+          <user-button></user-button>
+        </div>
+      </div>
     `;
   }
 }

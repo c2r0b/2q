@@ -11,8 +11,12 @@ import "./delete.ts";
 
 import { MenuQuery } from './queries/Menu.query.graphql.js';
 
+import shared from '../shared.css';
+
 @customElement('side-menu')
 export class Menu extends LitElement {
+  static readonly styles = [shared];
+
   @property() private canEdit: boolean = false;
 
   query = new ApolloQueryController(this, MenuQuery);
@@ -34,21 +38,23 @@ export class Menu extends LitElement {
     const sections = this.query.data?.sections ?? [];
     return html`
       <dl>
-        <ul>
+        <ul class="menu bg-base-100 w-56 p-2 rounded-box">
           ${sections.map(s => {
             return html`
               <li @click="${() => this.onMenuEntryClick(s.id)}">
-                <fa-icon .icon=${faCamera}></fa-icon>
-                ${s.title}
-                <div ?hidden=${!this.canEdit}>
-                <edit-btn
-                  sectionId="${s.id}"
-                  @edit="${this.updateData}"
-                ></edit-btn>
-                <delete-btn
-                  sectionId="${s.id}"
-                  @delete="${this.updateData}"
-                ></delete-btn>
+                <a>
+                  <fa-icon .icon=${faCamera}></fa-icon>
+                  ${s.title}
+                  <div ?hidden=${!this.canEdit}>
+                  <edit-btn
+                    sectionId="${s.id}"
+                    @edit="${this.updateData}"
+                  ></edit-btn>
+                  <delete-btn
+                    sectionId="${s.id}"
+                    @delete="${this.updateData}"
+                  ></delete-btn>
+                </a>
               </li>
             `;
           })}

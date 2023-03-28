@@ -6,7 +6,7 @@
   "type": "module",
   "author": "c2r0b <c2r0b@tuta.io>",
   "license": "ISC",
-  "description": "Apollo Elements App",
+  "description": "2Q",
   "scripts": {
     "start": "run-p start:*",
     "start:codegen": "graphql-codegen --watch",
@@ -25,11 +25,13 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@riovir/wc-fontawesome": "^0.1.9",
+    "@tanstack/table-core": "^8.5.13",
     "@types/auth0": "^2.35.3",
-    "apollo-server": "^3.8.1",
+    "daisyui": "^2.24.0",
     "dotenv": "^16.0.1",
     "graphql": "^15.8.0",
-    "pwa-helpers": "^0.9.1"
+    "pwa-helpers": "^0.9.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@apollo-elements/create": "^4.0.1",
@@ -56,5 +58,5 @@
     "tailwindcss": "^3.1.8",
     "typescript": "^4.x"
   },
-  "repository": "https://github.com/project-gemo/app.git"
+  "repository": "https://github.com/project-2q/app.git"
 }

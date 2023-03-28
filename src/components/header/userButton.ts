@@ -4,8 +4,14 @@ import { customElement, state } from 'lit/decorators.js';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import { UserData } from 'auth0';
 
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+
+import shared from '../shared.css';
+
 @customElement('user-button')
 export class UserButton extends LitElement {
+  static readonly styles = [shared];
+
   @state() user?: UserData;
 
   private _auth = undefined;
@@ -36,13 +42,16 @@ export class UserButton extends LitElement {
 
   render() {
     return html`
-      <p>${this.user?.name}</p>
-      <button 
-        type="button"
-        @click="${this._handleLogout}"
-      >
-        Log out
-      </button>
+      <div class="dropdown dropdown-en®d">
+        <div class="tooltip-bottom" data-tip="Account">
+          <label tabindex="0" class="btn btn-ghost btn-circle">
+            <fa-icon .icon=${faUser}></fa-icon>
+          </label>
+        </div>
+        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <li @click="${this._handleLogout}"><a>Logout</a></li>
+        </ul>
+      </div>
     `;
   }
 }

@@ -1,14 +1,11 @@
-# Gemo
-
+# 2Q
 Experimental phase
 
 ## Currently working
 X Neo4J
 X Auth0
 X FontAwesome
-
-## Working on
-- Tailwind
+X Tailwind
 
 ## To Do
 - Tauri
@@ -17,14 +14,13 @@ X FontAwesome
 
 ### Requirements
  - node (latest) + npm
-### Installation
 
-    npm install
+### Installation
+  npm install
 
 ### Start frontend
+	npm run start
 
-    npm run start
 ### Start backend
-
-    cd graphql
-    npm run start
+  cd graphql
+  npm run start

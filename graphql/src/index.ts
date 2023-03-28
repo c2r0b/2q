@@ -1,7 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { ApolloServer, AuthenticationError, gql } from "apollo-server";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from '@apollo/server/standalone';
+
+import { GraphQLError } from 'graphql';
 
 import { Neo4jGraphQL } from "@neo4j/graphql";
 import neo4j from "neo4j-driver";
@@ -12,7 +15,7 @@ import fs from "fs";
 import path from "path";
 
 const gqlWrapper = (...files) => {
-  return gql`${files}`;
+  return `${files}`;
 };
 
 const importFile = (file) => {
@@ -45,24 +48,27 @@ const neoSchema = new Neo4jGraphQL({
   driver
 });
 
-
 // startup server
-neoSchema.getSchema().then((schema) => {
-	const server = new ApolloServer({
-		schema,
+neoSchema.getSchema().then(async (schema) => {
+	const server = new ApolloServer({ schema });
+
+  const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => {
       const token = req.headers.authorization;
       const { error } = await isTokenValid(token);
 
       if (error) {
-        throw new AuthenticationError(error);
+        throw new GraphQLError(error, {
+          extensions: {
+            code: 'UNAUTHENTICATED'
+          }
+        });
       }
       
       return { req }
     },
-	});
+    listen: { port: 4000 }
+  });
 
-	server.listen().then(({ url }) => {
-		console.log(`🚀 Server ready at ${url}`);
-	});
+  console.log(`🚀 Server ready at ${url}`);
 });

@@ -3,10 +3,16 @@ import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { v4 as uuid } from 'uuid';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 import { CreateSections } from './mutations/CreateSections.mutation.graphql.js';
+
+import shared from "../shared.css";
 
 @customElement('add-btn')
 export class AddButton extends LitElement {
+  static readonly styles = [shared];
+
   createSectionsMutation = new ApolloMutationController(this, CreateSections)
 
   private async _handleAddClick(e) {
@@ -29,12 +35,11 @@ export class AddButton extends LitElement {
   
   render() {
     return html`
-      <button
-        type="button"
-        @click="${this._handleAddClick}"
-      >
-        Add
-      </button>
+      <div class="tooltip" data-tip="Add new section">
+        <button class="btn btn-circle" @click="${this._handleAddClick}">
+          <fa-icon .icon=${faPlus}  class="h-6 w-6"></fa-icon>
+        </button>
+      </div>
     `;
   }
 }
