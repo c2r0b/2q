@@ -11,14 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^4.5.0",
-    "@neo4j/graphql": "^3.3.0",
+    "@apollo/server": "^4.7.0",
+    "@neo4j/graphql": "^3.18.1",
     "datasource-sql": "^2.0.1",
-    "dotenv": "^16.0.1",
-    "jsonwebtoken": "^8.5.1",
-    "jwks-rsa": "^2.1.4",
-    "neo4j-driver": "^4.4.5",
-    "nodemon": "^2.0.16"
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "jwks-rsa": "^3.0.1",
+    "neo4j-driver": "^5.7.0",
+    "nodemon": "^2.0.22"
   },
   "devDependencies": {
     "ts-node": "^10.9.1"
