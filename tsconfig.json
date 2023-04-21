@@ -12,6 +12,9 @@
     "sourceMap": true,
     "target": "esnext",
     "useDefineForClassFields": false,
+    "paths": {
+      "src": ["/src/"]
+    },
     "lib": [
       "DOM.iterable",
       "DOM",

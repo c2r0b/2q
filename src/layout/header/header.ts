@@ -5,15 +5,15 @@ import './editToggle';
 import './userButton';
 import './systemButton';
 
-import shared from '../shared.css';
+import { sharedStyles } from '../shared.styles';
 
 @customElement('top-header')
 export class Header extends LitElement {
-  static readonly styles = [shared];
+  static readonly styles = [sharedStyles];
 
   render() {
     return html`
-      <div class="navbar bg-base-100">
+      <div class="relative flex bg-white">
         <div class="flex-1">
           <a class="btn btn-ghost normal-case text-xl">My First App</a>
         </div>

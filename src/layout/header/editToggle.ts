@@ -1,11 +1,11 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import shared from '../shared.css';
+import { sharedStyles } from '../shared.styles';
 
 @customElement('edit-toggle')
 export class EditToggle extends LitElement {
-  static readonly styles = [shared];
+  static readonly styles = [sharedStyles];
 
   _handleEditToggle(e) {
     this.dispatchEvent(new CustomEvent('editToggle',{

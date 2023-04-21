@@ -7,7 +7,7 @@ import { client } from './client';
 import { FontAwesomeIcon } from '@riovir/wc-fontawesome';
 customElements.define('fa-icon', FontAwesomeIcon);
 
-import './components/app';
+import './layout/app';
 
 const clientWrapper = document.getElementById('client') as ApolloClientElement;
 
