@@ -1,6 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { ApolloQueryController } from '@apollo-elements/core';
 import { customElement, state } from 'lit/decorators.js';
+
+import { createAuth0Client } from '@auth0/auth0-spa-js';
 
 import { AppQuery } from './App.query.graphql';
 
@@ -8,18 +10,17 @@ import "../header";
 import "../menu";
 import "../list";
 
-import style from './app.css';
-import shared from '../shared.css';
-import createAuth0Client from '@auth0/auth0-spa-js';
+import { appStyles } from './app.styles';
+import { sharedStyles } from '../shared.styles';
 
 @customElement('main-app')
 export class ApolloApp extends LitElement {
-  static readonly styles = [shared, style];
+  static readonly styles = [sharedStyles, appStyles];
   private _auth = undefined;
 
   query = new ApolloQueryController(this, AppQuery);
 
-  @state() private sectionId: String = "";
+  @state() private sectionId: string = "";
   @state() private canEdit: boolean = false;
   @state() private isAuthenticated: boolean = false;
 
@@ -31,9 +32,7 @@ export class ApolloApp extends LitElement {
     // force user auth
     const isAuthenticated = await this._auth.isAuthenticated();
     if (!isAuthenticated) {
-      await this._auth.loginWithRedirect({
-        redirect_uri: window.location.origin
-      });
+      await this._auth.loginWithRedirect();
     }
     localStorage.setItem('token', await this._auth.getTokenSilently());
     this.isAuthenticated = true;
@@ -42,9 +41,12 @@ export class ApolloApp extends LitElement {
   private async buildauth() {
     this._auth = await createAuth0Client({
       domain: process.env.AUTH0_DOMAIN,
-      client_id: process.env.AUTH0_CLIENT_ID,
-      audience: process.env.AUTH0_AUDIENCE,
-      cacheLocation: "localstorage"
+      clientId: process.env.AUTH0_CLIENT_ID,
+      cacheLocation: 'localstorage',
+      authorizationParams: {
+        audience: process.env.AUTH0_AUDIENCE,
+        redirect_uri: window.location.origin
+      }
     });
   }
 
@@ -70,9 +72,9 @@ export class ApolloApp extends LitElement {
 
   render() {
     if (!this.isAuthenticated) {
-      return html``;
+      return html`<p>Authenticating...</p>`;
     }
-    
+
     return html`
       <dl>
         <top-header

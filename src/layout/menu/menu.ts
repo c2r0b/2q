@@ -5,17 +5,17 @@ import { selMovie } from '../../cache.js';
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
-import "./add.ts";
-import "./edit.ts";
-import "./delete.ts";
+import "./add.js";
+import "./edit.js";
+import "./delete.js";
 
 import { MenuQuery } from './queries/Menu.query.graphql.js';
 
-import shared from '../shared.css';
+import { sharedStyles } from '../shared.styles';
 
 @customElement('side-menu')
 export class Menu extends LitElement {
-  static readonly styles = [shared];
+  static readonly styles = [sharedStyles];
 
   @property() private canEdit: boolean = false;
 

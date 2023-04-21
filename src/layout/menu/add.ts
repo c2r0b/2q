@@ -7,11 +7,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { CreateSections } from './mutations/CreateSections.mutation.graphql.js';
 
-import shared from "../shared.css";
+import { sharedStyles } from "../shared.styles";
 
 @customElement('add-btn')
 export class AddButton extends LitElement {
-  static readonly styles = [shared];
+  static readonly styles = [sharedStyles];
 
   createSectionsMutation = new ApolloMutationController(this, CreateSections)
 
