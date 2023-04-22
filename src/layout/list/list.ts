@@ -101,11 +101,11 @@ export class List extends LitElement {
   render() {
     const sub = this.query?.data?.sections[0];
 
-    const table = createTable({
+    /*const table = createTable({
       data: defaultData,
       columns,
       getCoreRowModel: getCoreRowModel(),
-    });
+    });*/
 
     return html`
       <dl>
