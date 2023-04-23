@@ -14,7 +14,7 @@ export class EditToggle extends LitElement {
     }));
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="form-control">
         <label class="label cursor-pointer">

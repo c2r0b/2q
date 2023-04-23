@@ -1,4 +1,3 @@
-import '@apollo-elements/components/apollo-client';
 import { ApolloClientElement } from '@apollo-elements/components/apollo-client';
 
 import { client } from './client';

@@ -7,7 +7,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 export class QuiButton extends LitElement {
   static readonly styles = [];
 
-  render() {
+  protected render() {
     return html`
       <div class="tooltip-bottom" data-tip="Settings">
         <label tabindex="0" class="btn btn-ghost btn-circle">

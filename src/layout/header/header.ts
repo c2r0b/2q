@@ -11,7 +11,7 @@ import { sharedStyles } from '../shared.styles';
 export class Header extends LitElement {
   static readonly styles = [sharedStyles];
 
-  render() {
+  protected render() {
     return html`
       <div class="relative flex bg-white">
         <div class="flex-1">

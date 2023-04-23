@@ -11,10 +11,12 @@ const postcssPlugin = fromRollup(rollupPostcss);
 const postcssLitPlugin = fromRollup(rollupPostcssLit);
 
 export default {
-  nodeResolve: true,
   port: 8004,
   appIndex: 'index.html',
   rootDir: '.',
+  nodeResolve: {
+    exportConditions: ['production'],
+  },
   mimeTypes: {
     'src/components/**/*.css': 'js',
     'src/style.css': 'css',

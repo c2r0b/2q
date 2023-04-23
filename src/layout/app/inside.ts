@@ -28,7 +28,7 @@ export class InsideApp extends LitElement {
     this.canEdit = e.detail.message;
   }
 
-  render() {
+  protected render() {
     return html`
       <dl>
         <top-header

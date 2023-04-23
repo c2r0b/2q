@@ -33,7 +33,7 @@ export class AddButton extends LitElement {
     this.dispatchEvent(new CustomEvent('add',{}));
   }
   
-  render() {
+  protected render() {
     return html`
       <div class="tooltip" data-tip="Add new section">
         <button class="btn btn-circle" @click="${this._handleAddClick}">

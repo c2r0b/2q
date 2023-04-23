@@ -31,7 +31,7 @@ export class EditButton extends LitElement {
     this.dispatchEvent(new CustomEvent('edit',{}));
   }
   
-  render() {
+  protected render() {
     return html`
       <button
         type="button"

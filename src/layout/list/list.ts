@@ -98,7 +98,7 @@ export class List extends LitElement {
     this.query.refetch(this.getVariables());
   }
 
-  render() {
+  protected render() {
     const sub = this.query?.data?.sections[0];
 
     /*const table = createTable({

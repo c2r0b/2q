@@ -34,7 +34,7 @@ export class Menu extends LitElement {
     this.query.refetch();
   }
   
-  render() {
+  protected render() {
     const sections = this.query.data?.sections ?? [];
     return html`
       <dl>

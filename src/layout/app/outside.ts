@@ -8,7 +8,7 @@ import { sharedStyles } from '../shared.styles';
 export class OutsideApp extends LitElement {
   static readonly styles = [sharedStyles, appStyles];
 
-  render() {
+  protected render() {
     return html`
       <span>Authenticating...</span>
     `;

@@ -13,7 +13,7 @@ export class ApolloApp extends LitElement {
     return html`<inside-app></inside-app>`;
   });
 
-  render() {
+  protected render() {
     return html`
       <dl>
         ${until(this.loggedInContent, html`<outside-app></outside-app>`)}

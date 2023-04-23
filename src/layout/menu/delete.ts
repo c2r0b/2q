@@ -25,7 +25,7 @@ export class DeleteButton extends LitElement {
     }
   }
   
-  render() {
+  protected render() {
     return html`
       <button
         type="button"

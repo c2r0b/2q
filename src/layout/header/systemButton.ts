@@ -12,7 +12,7 @@ export class SystemButton extends LitElement {
   static readonly styles = [sharedStyles];
   //<qui-button></qui-button>
   
-  render() {
+  protected render() {
     return html`
       <div class="dropdown dropdown-end">
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">

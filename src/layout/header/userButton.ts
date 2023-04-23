@@ -16,7 +16,7 @@ export class UserButton extends LitElement {
     await auth.logout();
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="dropdown dropdown-en®d">
         <div class="tooltip-bottom" data-tip="Account">
