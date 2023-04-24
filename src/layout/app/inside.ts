@@ -1,19 +1,20 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { ApolloQueryController } from '@apollo-elements/core';
 import { customElement, state } from 'lit/decorators.js';
+import { StyledElement } from '../../shared/styled.element';
 
 import { AppQuery } from './App.query.graphql';
 
 import "../header";
+import "../footer";
 import "../menu";
 import "../list";
 
 import { appStyles } from './app.styles';
-import { sharedStyles } from '../shared.styles';
 
 @customElement('inside-app')
-export class InsideApp extends LitElement {
-  static readonly styles = [sharedStyles, appStyles];
+export class InsideApp extends StyledElement() {
+  static readonly styles = [appStyles];
 
   query = new ApolloQueryController(this, AppQuery);
 
@@ -30,15 +31,18 @@ export class InsideApp extends LitElement {
 
   protected render() {
     return html`
-      <dl>
-        <top-header
-          @editToggle="${this._handleEditToggle}"
-        ></top-header>
-        <aside>
+      <div class="flex flex-row">
+        <aside class="w-100">
+          <aside-header
+            @editToggle="${this._handleEditToggle}"
+          ></aside-header>
           <side-menu
             .canEdit=${this.canEdit}
             @sectionChange="${this._handleSectionChange}"
           ></side-menu>
+          <aside-footer
+            @editToggle="${this._handleEditToggle}"
+          ></aside-footer>
         </aside>
         
         <container>
@@ -48,7 +52,7 @@ export class InsideApp extends LitElement {
             sectionId="${this.sectionId}"
           ></entries-list>
         </container>
-      </dl>
+      </div>
     `;
   }
 }

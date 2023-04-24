@@ -1,6 +1,7 @@
-import { ApolloMutationController, ApolloQueryController } from '@apollo-elements/core';
+import { ApolloMutationController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { confirm } from '@tauri-apps/api/dialog';
 
 import { DeleteSections } from './mutations/DeleteSections.mutation.graphql.js';
 
@@ -14,7 +15,7 @@ export class DeleteButton extends LitElement {
     if (!this.sectionId) {
       return;
     }
-    if (confirm("Are you sure you want to delete this?")) {
+    if (await confirm("Are you sure you want to delete this?")) {
       this.deleteSectionsMutation.variables = {
         where: {
           id: this.sectionId

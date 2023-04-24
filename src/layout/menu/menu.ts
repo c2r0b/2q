@@ -1,7 +1,7 @@
 import { ApolloQueryController } from '@apollo-elements/core';
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { selMovie } from '../../cache.js';
+import { StyledElement } from '../../shared/styled.element';
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,12 +11,8 @@ import "./delete.js";
 
 import { MenuQuery } from './queries/Menu.query.graphql.js';
 
-import { sharedStyles } from '../shared.styles';
-
 @customElement('side-menu')
-export class Menu extends LitElement {
-  static readonly styles = [sharedStyles];
-
+export class Menu extends StyledElement() {
   @property() private canEdit: boolean = false;
 
   query = new ApolloQueryController(this, MenuQuery);
@@ -38,10 +34,13 @@ export class Menu extends LitElement {
     const sections = this.query.data?.sections ?? [];
     return html`
       <dl>
-        <ul class="menu bg-base-100 w-56 p-2 rounded-box">
+        <ul class="w-100 list-none p-5">
           ${sections.map(s => {
             return html`
-              <li @click="${() => this.onMenuEntryClick(s.id)}">
+              <li
+                class="p-2 hover:bg-red-200 cursor-pointer"
+                @click="${() => this.onMenuEntryClick(s.id)}"
+              >
                 <a>
                   <fa-icon .icon=${faCamera}></fa-icon>
                   ${s.title}

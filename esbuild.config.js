@@ -8,9 +8,14 @@ Object.entries(keys).forEach(([key, value]) => {
 	return define[`process.env.${key}`] = JSON.stringify(value);
 })
 
-export const buildConfig = (isDev) => ({
-	ts: true,
-	tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
-	minify: isDev ? false : true,
-	define
-});
+export const buildConfig = (isDev) => {
+	return isDev ? {
+		ts: true,
+		tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
+		define
+	} : {
+		tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
+		minify: true,
+		define
+	};
+};

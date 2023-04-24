@@ -18,8 +18,7 @@ export default {
     exportConditions: ['production'],
   },
   mimeTypes: {
-    'src/components/**/*.css': 'js',
-    'src/style.css': 'css',
+    'src/**/*.css': 'js',
   },
   plugins: [
     esbuildPlugin(buildConfig(true)),
