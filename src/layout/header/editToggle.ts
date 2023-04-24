@@ -1,26 +1,25 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { StyledElement } from '../../shared/styled.element';
 
-import { sharedStyles } from '../shared.styles';
+import '../../ui/toggle/toggle';
 
 @customElement('edit-toggle')
-export class EditToggle extends LitElement {
-  static readonly styles = [sharedStyles];
-
+export class EditToggle extends StyledElement() {
   _handleEditToggle(e) {
-    this.dispatchEvent(new CustomEvent('editToggle',{
+    this.dispatchEvent(new CustomEvent('editToggle', {
       detail: { message: e.currentTarget.checked },
       composed: true
     }));
   }
 
-  render() {
+  protected render() {
     return html`
-      <div class="form-control">
-        <label class="label cursor-pointer">
-          <span class="label-text">Edit</span> 
-          <input type="checkbox" class="toggle" @change="${this._handleEditToggle}" />
-        </label>
+      <div class="mt-2">
+        <qui-toggle
+          label="Edit"
+          .onClick="${this._handleEditToggle}"
+        ></qui-toggle>
       </div>
     `;
   }

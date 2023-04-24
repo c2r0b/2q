@@ -17,10 +17,10 @@ class Auth {
     }
     localStorage.setItem('token', await this._auth.getTokenSilently());
     this._user = await this._auth.getUser();
-    return true;
   }
 
   private async buildauth() {
+    // Wait for callback from tauri oauth plugin
     this._auth = await createAuth0Client({
       domain: process.env.AUTH0_DOMAIN,
       clientId: process.env.AUTH0_CLIENT_ID,

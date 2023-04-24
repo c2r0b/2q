@@ -1,4 +1,4 @@
-import { ApolloMutationController, ApolloQueryController } from '@apollo-elements/core';
+import { ApolloMutationController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { v4 as uuid } from 'uuid';
@@ -7,11 +7,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { CreateSections } from './mutations/CreateSections.mutation.graphql.js';
 
-import { sharedStyles } from "../shared.styles";
-
 @customElement('add-btn')
 export class AddButton extends LitElement {
-  static readonly styles = [sharedStyles];
+  static readonly styles = [];
 
   createSectionsMutation = new ApolloMutationController(this, CreateSections)
 
@@ -33,7 +31,7 @@ export class AddButton extends LitElement {
     this.dispatchEvent(new CustomEvent('add',{}));
   }
   
-  render() {
+  protected render() {
     return html`
       <div class="tooltip" data-tip="Add new section">
         <button class="btn btn-circle" @click="${this._handleAddClick}">

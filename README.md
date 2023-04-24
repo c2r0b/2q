@@ -13,9 +13,9 @@ Current phase: **Proof of Concept**
 * [Web test runner](https://modern-web.dev/docs/test-runner/overview/) (testing)
 * [FontAwesome](https://fontawesome.com/) (icons)
 * [Tailwind](https://tailwindcss.com/) (CSS)
+* [Tauri](https://tauri.studio/en/) (desktop app)
 
 ## To Do
-- [ ] [Tauri](https://tauri.studio/en/) (desktop app)
 - [ ] [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 
 ## Development

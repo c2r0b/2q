@@ -1,6 +1,6 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
-import html from '@web/rollup-plugin-html';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
