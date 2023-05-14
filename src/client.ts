@@ -4,9 +4,11 @@ import { setContext } from '@apollo/client/link/context';
 import { locationVar } from './router';
 import { selMovie } from './cache';
 
-const uri = 'http://localhost:4000/graphql';
+const uri = 'http://127.0.0.1:8000';
 
-export const httpLink = new HttpLink({ uri });
+export const httpLink = new HttpLink({
+  uri
+});
 
 // authentication JWT tokens
 const authLink = setContext(async (_, { headers }) => {
@@ -44,5 +46,5 @@ const cache =
 
 export const client = new ApolloClient({
   cache,
-  link: authLink.concat(httpLink)
+  link: authLink.concat(httpLink),
 });

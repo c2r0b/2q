@@ -1,10 +1,11 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
+    "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "beforeDevCommand": "npm run start",
     "devPath": "http://localhost:8004/",
-    "distDir": "../build"
+    "distDir": "../build",
+    "withGlobalTauri": true
   },
   "package": {
     "productName": "2Q",
@@ -12,9 +13,18 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
+      "all": true,
       "dialog": {
         "all": true
+      },
+      "shell": {
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "binaries/app",
+            "sidecar": true
+          }
+        ]
       }
     },
     "bundle": {
@@ -24,7 +34,7 @@
       "deb": {
         "depends": []
       },
-      "externalBin": [],
+      "externalBin": ["binaries/app"],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
