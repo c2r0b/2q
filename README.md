@@ -1,7 +1,7 @@
 # 2Q
 
-2Q is a web app for managing your business data and relationships.  
-It's a work in progress, and is not ready for production use.
+2Q is an app for managing your business data and relationships.  
+It is currently a work in progress, and is not ready for production use.
 
 Current phase: **Proof of Concept**
 
@@ -16,6 +16,9 @@ Current phase: **Proof of Concept**
 * [Tauri](https://tauri.studio/en/) (desktop app)
 
 ## To Do
+- [ ] [Tauri Sidecar NodeJS](https://github.com/tauri-apps/tauri/tree/dev/examples/sidecar)
+- [ ] Neo4J Community Edition as a bin with Tauri sidecar
+- [ ] Remove Auth0 to have a completely standalone app
 - [ ] [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 
 ## Development
@@ -25,6 +28,11 @@ Current phase: **Proof of Concept**
 
 ### Installation
 	npm install
+
+### Start development
+	cd graphql/ && npm run build 
+	cd ../ && npm run package
+	npm run tauri dev
 
 ### Start frontend
 	npm run start

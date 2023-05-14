@@ -20,7 +20,7 @@ export class InsideApp extends StyledElement() {
 
   @state() private sectionId: string = "";
   @state() private canEdit: boolean = false;
-  
+
   private _handleSectionChange(e) {
     this.sectionId = e.detail.message;
   }
