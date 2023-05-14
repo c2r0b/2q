@@ -14,7 +14,6 @@ Current phase: **Proof of Concept**
 * [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
 
 ## To Do
-- [ ] Remove Auth0 dependency
 - [ ] [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 
 ## Development
