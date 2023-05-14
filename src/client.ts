@@ -1,5 +1,4 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client/core';
-import { setContext } from '@apollo/client/link/context';
 
 import { locationVar } from './router';
 import { selMovie } from './cache';
@@ -8,20 +7,6 @@ const uri = 'http://127.0.0.1:8000';
 
 export const httpLink = new HttpLink({
   uri
-});
-
-// authentication JWT tokens
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    }
-  }
 });
 
 const cache =
@@ -46,5 +31,5 @@ const cache =
 
 export const client = new ApolloClient({
   cache,
-  link: authLink.concat(httpLink),
+  link: httpLink,
 });
