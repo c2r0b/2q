@@ -7,7 +7,9 @@ Current phase: **Proof of Concept**
 
 ## Tech Stack
 * [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-* [Apollo](https://www.apollographql.com/) (both client and server) with [GraphQL](https://graphql.org/)
+* [Apollo Client](https://www.apollographql.com/docs/react/) (GraphQL client)
+* [GraphQL](https://graphql.org/)
+* [Rust](https://www.rust-lang.org/) (GraphQL server)
 * [Neo4J](https://neo4j.com/) (graph database)
 * [Auth0](https://auth0.com/) (authentication)
 * [Web test runner](https://modern-web.dev/docs/test-runner/overview/) (testing)
@@ -16,27 +18,26 @@ Current phase: **Proof of Concept**
 * [Tauri](https://tauri.studio/en/) (desktop app)
 
 ## To Do
-- [ ] [Tauri Sidecar NodeJS](https://github.com/tauri-apps/tauri/tree/dev/examples/sidecar)
-- [ ] Neo4J Community Edition as a bin with Tauri sidecar
-- [ ] Remove Auth0 to have a completely standalone app
+- [ ] Remove Auth0 dependency
 - [ ] [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 
 ## Development
 
 ### Requirements
  - [Node](https://nodejs.org/en/) (v18.x) with [npm](https://www.npmjs.com/)
+ - [Rust](https://www.rust-lang.org/) (v1.55.x)
+ - [Neo4J Community Edition](https://neo4j.com/download-center/#community) (v4.3.x)
 
 ### Installation
 	npm install
 
 ### Start development
-	cd graphql/ && npm run build 
-	cd ../ && npm run package
 	npm run tauri dev
 
-### Start frontend
-	npm run start
+### Environment variables
+`.env` files are used to store environment variables. Settings example:
 
-### Start backend
-	cd graphql
-	npm run start
+	# .env
+	NEO4J_URI=bolt://localhost:7687
+	NEO4J_USER=neo4j
+	NEO4J_PASSWORD=neo4j

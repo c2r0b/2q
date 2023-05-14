@@ -9,6 +9,7 @@ use warp::Filter;
 use std::convert::Infallible;
 use neo4rs::*;
 use std::sync::Arc;
+use dotenv::dotenv;
 
 #[derive(Clone)]
 struct Database {
@@ -62,12 +63,13 @@ type MySchema = Schema<QueryRoot, EmptyMutation, EmptySubscription>;
 
 #[tokio::main]
 async fn main() {
+    dotenv().ok();
     tokio::spawn(async {
-        let uri = "localhost:7687";
-        let user = "neo4j";
-        let pass = "orlando-saddle-virgo-human-nylon-3697";
+        let uri = std::env::var("NEO4J_URI").expect("NEO4J_URI must be set.");
+        let user = std::env::var("NEO4J_USER").expect("NEO4J_USER must be set.");
+        let pass = std::env::var("NEO4J_PASSWORD").expect("NEO4J_PASSWORD must be set.");
     
-        let graph = Graph::new(&uri, user, pass).await.unwrap();
+        let graph = Graph::new(&uri, &user, &pass).await.unwrap();
         let database = Database { graph: Arc::new(graph) };
     
         let schema = Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
