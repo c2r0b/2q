@@ -7,15 +7,11 @@ Current phase: **Proof of Concept**
 
 ## Tech Stack
 * [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-* [Apollo Client](https://www.apollographql.com/docs/react/) (GraphQL client)
-* [GraphQL](https://graphql.org/)
-* [Rust](https://www.rust-lang.org/) (GraphQL server)
+* [Apollo Client](https://www.apollographql.com/docs/react/) with [GraphQL](https://graphql.org/)
 * [Neo4J](https://neo4j.com/) (graph database)
-* [Auth0](https://auth0.com/) (authentication)
-* [Web test runner](https://modern-web.dev/docs/test-runner/overview/) (testing)
 * [FontAwesome](https://fontawesome.com/) (icons)
 * [Tailwind](https://tailwindcss.com/) (CSS)
-* [Tauri](https://tauri.studio/en/) (desktop app)
+* [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
 
 ## To Do
 - [ ] Remove Auth0 dependency
