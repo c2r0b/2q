@@ -29,6 +29,11 @@ Current phase: **Proof of Concept**
 ### Start development
 	npm run tauri dev
 
+### Start database
+Go to the Neo4J installation directory and run:
+
+	./bin/neo4j-admin server console
+
 ### Environment variables
 `.env` files are used to store environment variables. Settings example:
 
