@@ -11,7 +11,7 @@ export class EditButton extends LitElement {
   updateSectionsMutation = new ApolloMutationController(this, UpdateSections)
 
   private async _handleEditClick() {
-    const newTitle = prompt("Enter new section name");
+    const newTitle = "EDIT";
     if (!newTitle) {
       alert("Invalid section name");
       return;

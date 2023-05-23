@@ -3,7 +3,7 @@
   windows_subsystem = "windows"
 )]
 
-use async_graphql::{Context, EmptyMutation, EmptySubscription, Object, Schema};
+use async_graphql::{Schema, EmptySubscription};
 use async_graphql_warp::graphql;
 use warp::Filter;
 use std::convert::Infallible;
@@ -11,55 +11,16 @@ use neo4rs::*;
 use std::sync::Arc;
 use dotenv::dotenv;
 
-#[derive(Clone)]
-struct Database {
-    graph: Arc<Graph>,
-}
+mod database;
+mod section;
+mod query_root;
+mod mutation_root;
 
-struct QueryRoot;
+use crate::database::Database;
+use crate::query_root::QueryRoot;
+use crate::mutation_root::MutationRoot;
 
-#[Object]
-impl QueryRoot {
-    async fn sections(&self, ctx: &Context<'_>) -> Vec<Section> {
-        let data = ctx.data::<Database>().unwrap();
-        let graph = data.graph.clone();
-        
-        let mut result = graph.execute(
-            query("MATCH (s:Section) RETURN s")
-        ).await.unwrap();
-
-        let mut sections = vec![];
-
-        while let Ok(Some(row)) = result.next().await {
-            let node: Node = row.get("s").unwrap();
-            let id: String = node.get("id").unwrap();
-            let title: String = node.get("title").unwrap();
-
-            sections.push(Section { id, title });
-        }
-
-        sections
-    }
-}
-
-#[derive(Clone)]
-struct Section {
-    id: String,
-    title: String,
-}
-
-#[Object]
-impl Section {
-    async fn id(&self) -> &str {
-        &self.id
-    }
-
-    async fn title(&self) -> &str {
-        &self.title
-    }
-}
-
-type MySchema = Schema<QueryRoot, EmptyMutation, EmptySubscription>;
+type MySchema = Schema<QueryRoot, MutationRoot, EmptySubscription>;
 
 #[tokio::main]
 async fn main() {
@@ -72,13 +33,13 @@ async fn main() {
         let graph = Graph::new(&uri, &user, &pass).await.unwrap();
         let database = Database { graph: Arc::new(graph) };
     
-        let schema = Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
+        let schema = Schema::build(QueryRoot, MutationRoot, EmptySubscription)
             .data(database)
             .finish();
     
         let cors = warp::cors()
-            .allow_any_origin() // Be careful with this in a production application
-            .allow_methods(vec!["GET", "POST", "DELETE"]) // You might need to adjust this depending on your needs
+            .allow_any_origin()
+            .allow_methods(vec!["GET", "POST", "DELETE"])
             .allow_headers(vec!["content-type", "authorization"]);
     
         let graphql_post = graphql(schema.clone()).and_then(|(schema, request): (MySchema, async_graphql::Request)| async move {
