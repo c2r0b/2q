@@ -7,22 +7,30 @@ addons.setConfig({
   theme: QUITheme,
 });
 
-// Automatically switch light/dark theme based on system pref.
-addons.register("auto-theme-switcher", api => {
+const getColorScheme = matches => {
+  return matches ? 'dark' : 'light';
+};
 
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  let lastTheme;
+const queryWindowMatchMedia = () => {
+  return window && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+};
 
-  // Check every second. This keeps everything in sync and works reliably
-  // on Chrome which doesn't seem to support change events on this media query.
-  setInterval(() => {
-    const desiredTheme = prefersDark.matches ? "dark" : "normal";
+// automatically switch light/dark theme based on system pref.
+addons.register('auto-theme-switcher', api => {
+  let currTheme;
 
-    if (lastTheme !== desiredTheme) {
-      lastTheme = desiredTheme;
-      api.setOptions({theme: themes[desiredTheme]});
+  queryWindowMatchMedia().addEventListener('change', e => {
+    const updatedTheme = getColorScheme(e.matches);
+    if (currTheme !== updatedTheme) {
+      currTheme = updatedTheme;
+      api.setOptions({
+        theme: themes[updatedTheme],
+        docs: {
+          theme: themes[updatedTheme],
+        }
+      });
       addons.getChannel().emit(FORCE_RE_RENDER);
-    }
-  }, 1000);
 
+    }
+  });
 });

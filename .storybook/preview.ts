@@ -1,7 +1,6 @@
 import "./style.css";
 
 import type { Preview } from "@storybook/web-components";
-import { themes } from "@storybook/theming";
 
 const preview: Preview = {
   parameters: {
@@ -14,15 +13,7 @@ const preview: Preview = {
     },
     backgrounds: { 
       disable: true 
-    },
-    docs: {
-      theme: themes.dark,
-    },
-    darkMode: {
-      darkClass: 'darkClass',
-      lightClass: 'lightClass',
-      stylePreview: true,
-    },
+    }
   },
 };
 
