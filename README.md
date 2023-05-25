@@ -9,12 +9,13 @@ Current phase: **Proof of Concept**
 * [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
 * [Apollo Client](https://www.apollographql.com/docs/react/) with [GraphQL](https://graphql.org/)
 * [Neo4J](https://neo4j.com/) (graph database)
-* [FontAwesome](https://fontawesome.com/) (icons)
-* [Tailwind](https://tailwindcss.com/) (CSS)
 * [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
+* [Tailwind](https://tailwindcss.com/) (CSS) with [FontAwesome](https://fontawesome.com/) (icons)
+* [Storybook](https://storybook.js.org/) (component library)
 
 ## To Do
 - [ ] [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
+- [ ] Built-in Neo4J database (with Tauri Sidecar)
 
 ## Development
 
@@ -29,7 +30,10 @@ Current phase: **Proof of Concept**
 ### Start development
 	npm run tauri dev
 
-### Start database
+### Start Storybook (optional)
+	npm run storybook
+
+### Start database (optional)
 Go to the Neo4J installation directory and run:
 
 	./bin/neo4j-admin server console
