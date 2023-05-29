@@ -1,8 +1,11 @@
 import { ApolloMutationController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import { UpdateSections } from './mutations/UpdateSections.mutation.graphql.js';
+
+import '../../../../ui/button/button';
 
 @customElement('edit-btn')
 export class EditButton extends LitElement {
@@ -33,12 +36,12 @@ export class EditButton extends LitElement {
   
   protected render() {
     return html`
-      <button
-        type="button"
+      <qui-button
+        .icon="${faEdit}"
         @click="${this._handleEditClick}"
       >
         Edit
-      </button>
+      </qui-button>
     `;
   }
 }

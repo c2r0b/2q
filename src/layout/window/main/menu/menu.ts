@@ -1,7 +1,7 @@
 import { ApolloQueryController } from '@apollo-elements/core';
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { StyledElement } from '../../shared/styled.element';
+import { StyledElement } from '../../../../shared/styled.element';
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,8 +19,6 @@ export class Menu extends StyledElement() {
 
   // on section change
   private onMenuEntryClick(path) {
-    //window.history.pushState({}, '', '/' + path);
-    //selMovie(path);
     this.dispatchEvent(new CustomEvent('sectionChange',{
       detail: { message: path }
     }));
