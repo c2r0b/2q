@@ -1,7 +1,7 @@
 import { ApolloQueryController } from '@apollo-elements/core';
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { StyledElement } from '../../shared/styled.element';
+import { StyledElement } from '../../../../shared/styled.element';
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,22 +19,20 @@ export class Menu extends StyledElement() {
 
   // on section change
   private onMenuEntryClick(path) {
-    //window.history.pushState({}, '', '/' + path);
-    //selMovie(path);
     this.dispatchEvent(new CustomEvent('sectionChange',{
       detail: { message: path }
     }));
   }
 
-  private updateData() {
-    this.query.refetch();
+  private async updateData() {
+    await this.query.refetch();
   }
   
   protected render() {
     const sections = this.query.data?.sections ?? [];
     return html`
       <dl>
-        <ul class="w-100 list-none p-5">
+        <ul class="w-100 list-none">
           ${sections.map(s => {
             return html`
               <li
@@ -45,14 +43,15 @@ export class Menu extends StyledElement() {
                   <fa-icon .icon=${faCamera}></fa-icon>
                   ${s.title}
                   <div ?hidden=${!this.canEdit}>
-                  <edit-btn
-                    sectionId="${s.id}"
-                    @edit="${this.updateData}"
-                  ></edit-btn>
-                  <delete-btn
-                    sectionId="${s.id}"
-                    @delete="${this.updateData}"
-                  ></delete-btn>
+                    <edit-btn
+                      sectionId="${s.id}"
+                      @edit="${this.updateData}"
+                    ></edit-btn>
+                    <delete-btn
+                      sectionId="${s.id}"
+                      @delete="${this.updateData}"
+                    ></delete-btn>
+                  </div>
                 </a>
               </li>
             `;

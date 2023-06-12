@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { ListQuery } from './queries/List.query.graphql.js';
 
-import { createColumnHelper, createTable, getCoreRowModel } from '@tanstack/table-core';
+import { createColumnHelper } from '@tanstack/table-core';
 
 type Person = {
   firstName: string

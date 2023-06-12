@@ -22,6 +22,7 @@ impl Section {
 pub struct SectionCreateInput {
     pub id: String,
     pub title: String,
+    pub description: String,
 }
 
 #[derive(SimpleObject)]

@@ -22,6 +22,7 @@ async-graphql = "5.0.8"
 async-graphql-warp = "5.0.8"
 warp = "0.3.5"
 dotenv = "0.15.0"
+async-openai = "0.10.3"
 
 [features]
 # by default Tauri runs in production mode

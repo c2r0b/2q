@@ -59,10 +59,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 750,
         "resizable": true,
         "title": "2Q",
-        "width": 800
+        "width": 1100,
+        "minWidth": 1000,
+        "minHeight": 600
       }
     ]
   }

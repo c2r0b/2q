@@ -2,8 +2,11 @@ import { ApolloMutationController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { confirm } from '@tauri-apps/api/dialog';
+import { faRemove } from '@fortawesome/free-solid-svg-icons';
 
 import { DeleteSections } from './mutations/DeleteSections.mutation.graphql.js';
+
+import '../../../../ui/button/button';
 
 @customElement('delete-btn')
 export class DeleteButton extends LitElement {
@@ -28,12 +31,11 @@ export class DeleteButton extends LitElement {
   
   protected render() {
     return html`
-      <button
-        type="button"
+      <qui-button
+        aria-label="Delete section"
+        .icon="${faRemove}"
         @click="${this._handleDeleteClick}"
-      >
-        Delete
-      </button>
+      />
     `;
   }
 }

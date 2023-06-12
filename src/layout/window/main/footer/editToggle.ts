@@ -1,8 +1,8 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { StyledElement } from '../../shared/styled.element';
+import { StyledElement } from '../../../../shared/styled.element';
 
-import '../../ui/toggle/toggle';
+import '../../../../ui/toggle/toggle';
 
 @customElement('edit-toggle')
 export class EditToggle extends StyledElement() {
