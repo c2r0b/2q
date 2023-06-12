@@ -37,11 +37,10 @@ export class EditButton extends LitElement {
   protected render() {
     return html`
       <qui-button
+        aria-label="Edit section"
         .icon="${faEdit}"
         @click="${this._handleEditClick}"
-      >
-        Edit
-      </qui-button>
+      />
     `;
   }
 }

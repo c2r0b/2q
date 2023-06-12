@@ -37,6 +37,7 @@ type Mutation {
   createSections(input: [SectionCreateInput]): CreateResults
   updateSections(where: SectionWhere, update: SectionUpdateInput): CreateResults
   deleteSections(where: SectionWhere): DeleteResults
+  sendChatMessage(message: String!): String
 }
 
 type SectionWhere {
@@ -46,6 +47,7 @@ type SectionWhere {
 type SectionCreateInput {
   id: ID!
   title: String!
+  description: String!
 }
 
 type SectionUpdateInput {

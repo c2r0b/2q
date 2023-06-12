@@ -9,12 +9,10 @@ Current phase: **Proof of Concept**
 * [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
 * [Apollo Client](https://github.com/apollographql/apollo-client) with [GraphQL](https://graphql.org/)
 * [Neo4J](https://neo4j.com/) (graph database)
+* [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 * [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
 * [Tailwind](https://tailwindcss.com/) (CSS) with [FontAwesome](https://fontawesome.com/) (icons)
 * [Storybook](https://storybook.js.org/) (component library)
-
-## To Do
-- [ ] [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 
 ## Development
 
@@ -44,3 +42,4 @@ Go to the Neo4J installation directory and run:
 	NEO4J_URI=bolt://localhost:7687
 	NEO4J_USER=neo4j
 	NEO4J_PASSWORD=neo4j
+	OPENAI_KEY=your-openai-key

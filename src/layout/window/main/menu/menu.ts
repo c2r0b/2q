@@ -24,15 +24,15 @@ export class Menu extends StyledElement() {
     }));
   }
 
-  private updateData() {
-    this.query.refetch();
+  private async updateData() {
+    await this.query.refetch();
   }
   
   protected render() {
     const sections = this.query.data?.sections ?? [];
     return html`
       <dl>
-        <ul class="w-100 list-none p-5">
+        <ul class="w-100 list-none">
           ${sections.map(s => {
             return html`
               <li
@@ -43,14 +43,15 @@ export class Menu extends StyledElement() {
                   <fa-icon .icon=${faCamera}></fa-icon>
                   ${s.title}
                   <div ?hidden=${!this.canEdit}>
-                  <edit-btn
-                    sectionId="${s.id}"
-                    @edit="${this.updateData}"
-                  ></edit-btn>
-                  <delete-btn
-                    sectionId="${s.id}"
-                    @delete="${this.updateData}"
-                  ></delete-btn>
+                    <edit-btn
+                      sectionId="${s.id}"
+                      @edit="${this.updateData}"
+                    ></edit-btn>
+                    <delete-btn
+                      sectionId="${s.id}"
+                      @delete="${this.updateData}"
+                    ></delete-btn>
+                  </div>
                 </a>
               </li>
             `;

@@ -8,7 +8,7 @@ import '../footer/editToggle';
 export class AsideHeader extends StyledElement() {
   protected render() {
     return html`
-      <div class="flex justify-between px-5 bg-gray-100 dark:bg-gray-800 py-3">
+      <div class="flex justify-between px-5 bg-gray-100 dark:bg-gray-800 py-2">
         <span class="text-l normal-case pt-2">My First App</span>
       </div>
     `;

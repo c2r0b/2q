@@ -32,11 +32,10 @@ export class DeleteButton extends LitElement {
   protected render() {
     return html`
       <qui-button
+        aria-label="Delete section"
         .icon="${faRemove}"
         @click="${this._handleDeleteClick}"
-      >
-        Delete
-      </qui-button>
+      />
     `;
   }
 }

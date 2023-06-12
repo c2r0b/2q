@@ -22,8 +22,8 @@ export class MainWindow extends StyledElement() {
 
   protected render() {
     return html`
-      <div class="flex h-full">
-        <aside class="flex-none w-1/3 h-full">
+      <div class="flex h-full bg-gray-50 dark:bg-gray-900">
+        <aside class="flex-none w-1/3 h-full relative">
           <aside-header></aside-header>
           <side-menu
             .canEdit=${this.canEdit}
