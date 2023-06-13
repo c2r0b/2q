@@ -1,8 +1,8 @@
 {
   "main": "index.html",
   "private": true,
-  "name": "apollo-elements-app",
-  "version": "1.0.0",
+  "name": "2q-app",
+  "version": "0.0.1",
   "type": "module",
   "author": "c2r0b <c2r0b@tuta.io>",
   "license": "ISC",

@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { StyledElement } from '../../../../shared/styled.element';
 
 import "./list";
+import "./footer";
 
 @customElement('section-content')
 export class SectionContent extends StyledElement() {
@@ -19,6 +20,7 @@ export class SectionContent extends StyledElement() {
           sectionId="${this._sectionId}"
         ></entries-list>
       </container>
+      <section-footer></section-footer>
     `;
   }
 }

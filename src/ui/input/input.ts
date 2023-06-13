@@ -23,7 +23,7 @@ export class QuiInput extends StyledElement() {
   protected render() {
     return html`
       <input
-        class="px-2 py-1 w-full bg-gray-200 hover:bg-gray-600 rounded-sm dark:bg-gray-700 dark:border-gray-600"
+        class="px-2 py-1 w-full bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-sm dark:bg-gray-700 dark:border-gray-600"
         placeholder=${this.placeholder}
         ?disabled=${this.disabled}
         .value=${this.value}

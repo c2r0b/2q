@@ -12,6 +12,7 @@
     "sourceMap": true,
     "target": "esnext",
     "useDefineForClassFields": false,
+    "resolveJsonModule": true,
     "paths": {
       "src": ["/src/"]
     },
