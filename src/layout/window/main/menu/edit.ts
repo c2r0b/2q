@@ -5,7 +5,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import { UpdateSections } from './mutations/UpdateSections.mutation.graphql.js';
 
-import '../../../../ui/button/button';
+import '../../../../ui/button';
 
 @customElement('edit-btn')
 export class EditButton extends LitElement {

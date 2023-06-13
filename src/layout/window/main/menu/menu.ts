@@ -5,7 +5,10 @@ import { StyledElement } from '../../../../shared/styled.element';
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
-import "./add.js";
+import "./header";
+import "./footer";
+
+import "./header/add.js";
 import "./edit.js";
 import "./delete.js";
 
@@ -13,8 +16,6 @@ import { MenuQuery } from './queries/Menu.query.graphql.js';
 
 @customElement('side-menu')
 export class Menu extends StyledElement() {
-  @property() private canEdit: boolean = false;
-
   query = new ApolloQueryController(this, MenuQuery);
 
   // on section change
@@ -31,18 +32,21 @@ export class Menu extends StyledElement() {
   protected render() {
     const sections = this.query.data?.sections ?? [];
     return html`
-      <dl>
+      <aside class="flex-none w-64 h-full relative border-r border-r-gray-200 dark:border-r-gray-700">
+        <aside-header
+          @refresh="${this.updateData}"
+        ></aside-header>
         <ul class="w-100 list-none">
           ${sections.map(s => {
             return html`
               <li
-                class="p-2 hover:bg-red-200 cursor-pointer"
+                class="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
                 @click="${() => this.onMenuEntryClick(s.id)}"
               >
                 <a>
                   <fa-icon .icon=${faCamera}></fa-icon>
                   ${s.title}
-                  <div ?hidden=${!this.canEdit}>
+                  <div>
                     <edit-btn
                       sectionId="${s.id}"
                       @edit="${this.updateData}"
@@ -57,11 +61,8 @@ export class Menu extends StyledElement() {
             `;
           })}
         </ul>
-        <add-btn
-          ?hidden=${!this.canEdit}
-          @add="${this.updateData}"
-        ></add-btn>
-      </dl>
+        <aside-footer></aside-footer>
+      </aside>
     `;
   }
 }

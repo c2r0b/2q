@@ -4,9 +4,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { WebviewWindow } from '@tauri-apps/api/window';
 import { listen } from '@tauri-apps/api/event';
 
-import '../../../../ui/button/button';
+import '../../../../../ui/tooltip';
+import '../../../../../ui/button';
 
-import { windowOptions as SectionWindowOptions } from '../../add-section/add-section';
+import { windowOptions as SectionWindowOptions } from '../../../add-section/add-section';
 
 @customElement('add-btn')
 export class AddButton extends LitElement {
@@ -25,11 +26,13 @@ export class AddButton extends LitElement {
   
   protected render() {
     return html`
-      <qui-button
-        aria-label="Add new section"
-        .icon="${faPlus}"
-        @click="${this._handleAddClick}"
-      />
+      <qui-tooltip text="New section" orientation="below">
+        <qui-button
+          aria-label="Add new section"
+          .icon="${faPlus}"
+          @click="${this._handleAddClick}"
+        />
+      </qui-tooltip>
     `;
   }
 }

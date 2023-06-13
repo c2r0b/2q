@@ -2,14 +2,12 @@ import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { StyledElement } from '../../../../shared/styled.element';
 
-@customElement('aside-footer')
-export class AsideFooter extends StyledElement() {
+@customElement('app-footer')
+export class AppHeader extends StyledElement() {
   protected render() {
     return html`
-      <div class="absolute bottom-0 left-0 right-0 flex justify-between px-5 bg-gray-100 dark:bg-gray-800 py-2">
-        <div class="flex gap-5">
-          <edit-toggle></edit-toggle>
-        </div>
+      <div class="w-full h-7 border-t border-t-gray-200 dark:border-t-gray-700 px-4 pt-1.5 text-xs text-gray-600">
+        <slot></slot>
       </div>
     `;
   }

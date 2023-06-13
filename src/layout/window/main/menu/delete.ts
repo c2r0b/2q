@@ -6,7 +6,7 @@ import { faRemove } from '@fortawesome/free-solid-svg-icons';
 
 import { DeleteSections } from './mutations/DeleteSections.mutation.graphql.js';
 
-import '../../../../ui/button/button';
+import '../../../../ui/button';
 
 @customElement('delete-btn')
 export class DeleteButton extends LitElement {

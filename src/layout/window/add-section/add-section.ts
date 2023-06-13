@@ -6,22 +6,22 @@ import { StyledElement } from '../../../shared/styled.element';
 import { appWindow } from '@tauri-apps/api/window';
 import { emit } from '@tauri-apps/api/event';
 
-import '../../../ui/button/button';
-import '../../../ui/textarea/textarea';
-import '../../../ui/loader/loader';
-import '../../../ui/field/field';
-import '../../../ui/input/input';
-import '../../../ui/picker/icon/icon-picker';
-import '../../../ui/modal/modal-container/modal-container';
-import '../../../ui/modal/modal-form/modal-form';
-import '../../../ui/modal/modal-footer/modal-footer';
+import '../../../ui/button';
+import '../../../ui/textarea';
+import '../../../ui/loader';
+import '../../../ui/field';
+import '../../../ui/input';
+import '../../../ui/picker/icon';
+import '../../../ui/modal/modal-container';
+import '../../../ui/modal/modal-form';
+import '../../../ui/modal/modal-footer';
 
 import { SendChatMessage } from '../../../shared/mutations/SendChatMessage.mutation.graphql.js';
 import { CreateSections } from './mutations/CreateSections.mutation.graphql.js';
 
 export const windowOptions = {
 	url: '/add-section',
-    title: 'Add new section',
+    title: '2Q - Add new section',
     width: 600,
     height: 300,
 };
