@@ -11,7 +11,7 @@ export class QuiButton extends StyledElement() {
   protected render() {
     return html`
       <button
-        class="px-3 py-1 bg-gray-200 rounded-sm hover:bg-gray-300 dark:hover:bg-gray-600 dark:bg-gray-700 dark:border-gray-600"
+        class="transition-all duration-150 px-3 py-1 cursor-pointer bg-gray-200 rounded-sm hover:bg-gray-300 dark:hover:text-gray-900 dark:bg-gray-700 dark:border-gray-600 disabled:bg-gray-50 dark:disabled:bg-gray-950 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-600"
         ?disabled=${this.disabled}
         @click=${this.onClick}
       >

@@ -1,6 +1,6 @@
 import { ApolloQueryController } from '@apollo-elements/core';
 import { html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { StyledElement } from '../../../../shared/styled.element';
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';

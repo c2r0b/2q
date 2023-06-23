@@ -19,6 +19,7 @@ type Query {
   location: Location
   selMovie: String
   sections: [Section]
+  hasTimetravelSupport: Boolean
 }
 
 type CreateInfo {
