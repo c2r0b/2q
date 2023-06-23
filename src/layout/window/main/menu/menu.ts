@@ -28,6 +28,14 @@ export class Menu extends StyledElement() {
   private async updateData() {
     await this.query.refetch();
   }
+
+  // filter sections by title
+   private onFilterChange(e) {
+     this.query.variables = {
+       title: e.detail.message || undefined
+     };
+     this.updateData();
+  }
   
   protected render() {
     const sections = this.query.data?.sections ?? [];
@@ -35,6 +43,7 @@ export class Menu extends StyledElement() {
       <aside class="flex-none w-64 h-full relative border-r border-r-gray-200 dark:border-r-gray-700">
         <aside-header
           @refresh="${this.updateData}"
+          @filterChange="${this.onFilterChange}"
         ></aside-header>
         <ul class="w-100 list-none">
           ${sections.map(s => {

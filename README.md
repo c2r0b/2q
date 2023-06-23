@@ -8,7 +8,7 @@ Current phase: **Proof of Concept**
 ## Tech Stack
 * [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
 * [Apollo Client](https://github.com/apollographql/apollo-client) with [GraphQL](https://graphql.org/)
-* [Neo4J](https://neo4j.com/) or [ArangoDB](https://www.arangodb.com/) (graph databases)
+* [Neo4J](https://neo4j.com/) or [ArangoDB](https://www.arangodb.com/) (database)
 * [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 * [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
 * [Tailwind](https://tailwindcss.com/) (CSS) with [FontAwesome](https://fontawesome.com/) (icons)
@@ -38,7 +38,7 @@ Start Neo4J or ArangoDB, and set the database connection settings in `.env` (see
 
 	# .env
 	DB_TYPE=arango|neo4j
-	DB_URI=bolt://localhost:7687
+	DB_URI=localhost:7687
 	DB_USER=neo4j
 	DB_PASSWORD=neo4j
 	OPENAI_KEY=your-openai-key

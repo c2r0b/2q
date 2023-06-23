@@ -1,5 +1,5 @@
-query MenuQuery {
-  sections {
+query MenuQuery($title: String) {
+  sections(where: { title: $title }) {
     id
     title
   }

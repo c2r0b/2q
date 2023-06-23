@@ -55,3 +55,9 @@ pub struct SectionWhere {
 pub struct SectionUpdateInput {
     pub title: String,
 }
+
+#[derive(InputObject, Debug)]
+pub struct SectionFilter {
+    pub title: Option<String>,
+    pub id: Option<String>,
+}

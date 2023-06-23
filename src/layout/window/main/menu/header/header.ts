@@ -12,6 +12,9 @@ export class AsideHeader extends StyledElement() {
 
   private _handleFilterInput(e) {
     this.sectionTitle = e.detail.value as string || "";
+    this.dispatchEvent(new CustomEvent('filterChange', {
+      detail: { message: this.sectionTitle }
+    }));
   }
 
   private _handleRefresh() {
