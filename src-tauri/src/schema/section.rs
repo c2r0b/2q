@@ -1,6 +1,7 @@
 use async_graphql::{Object, InputObject, SimpleObject};
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Section {
     pub id: String,
     pub title: String,
@@ -18,7 +19,7 @@ impl Section {
 }
 
 // Define your input types
-#[derive(InputObject)]
+#[derive(InputObject, Clone, Serialize, Deserialize)]
 pub struct SectionCreateInput {
     pub id: String,
     pub title: String,

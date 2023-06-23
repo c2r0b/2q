@@ -8,7 +8,7 @@ Current phase: **Proof of Concept**
 ## Tech Stack
 * [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
 * [Apollo Client](https://github.com/apollographql/apollo-client) with [GraphQL](https://graphql.org/)
-* [Neo4J](https://neo4j.com/) (graph database)
+* [Neo4J](https://neo4j.com/) or [ArangoDB](https://www.arangodb.com/) (graph databases)
 * [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
 * [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
 * [Tailwind](https://tailwindcss.com/) (CSS) with [FontAwesome](https://fontawesome.com/) (icons)
@@ -19,7 +19,7 @@ Current phase: **Proof of Concept**
 ### Requirements
  - [Node](https://nodejs.org/en/) (v18.x) with [npm](https://www.npmjs.com/)
  - [Rust](https://www.rust-lang.org/) (v1.55.x)
- - [Neo4J Community Edition](https://neo4j.com/download-center/#community) (v4.3.x)
+ - [Neo4J](https://neo4j.com/download-center/#community) (v4.3.x) or [ArangoDB](https://www.arangodb.com/download-major/) (v3.12.x)
 
 ### Installation
 	npm install
@@ -31,15 +31,14 @@ Current phase: **Proof of Concept**
 	npm run storybook
 
 ### Start database (optional)
-Go to the Neo4J installation directory and run:
-
-	./bin/neo4j-admin server console
+Start Neo4J or ArangoDB, and set the database connection settings in `.env` (see below).
 
 ### Environment variables
 `.env` files are used to store environment variables. Settings example:
 
 	# .env
-	NEO4J_URI=bolt://localhost:7687
-	NEO4J_USER=neo4j
-	NEO4J_PASSWORD=neo4j
+	DB_TYPE=arango|neo4j
+	DB_URI=bolt://localhost:7687
+	DB_USER=neo4j
+	DB_PASSWORD=neo4j
 	OPENAI_KEY=your-openai-key

@@ -36,8 +36,8 @@ export class AppHeader extends StyledElement(headerStyles) {
 
   protected render() {
     return html`
-      <div class="w-16 flex flex-col justify-between h-full border-r border-r-gray-200 dark:border-r-gray-700 bg-white dark:bg-black">
-        <div class="normal-case text-2xl rotate-90 inline-block whitespace-nowrap pl-4 py-3 word-spacing cursor-default">
+      <div class="w-16 flex flex-col justify-between h-full border-r border-r-gray-200 dark:border-r-gray-700 ">
+        <div class="normal-case text-xl rotate-90 inline-block whitespace-nowrap pl-4 py-3 word-spacing cursor-default">
           My First Context
         </div>
         <div>

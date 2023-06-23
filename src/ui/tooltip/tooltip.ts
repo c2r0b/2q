@@ -28,7 +28,7 @@ export class QuiTooltip extends StyledElement() {
       >
         <slot></slot>
         <span 
-          class="tooltip-text absolute text-center rounded-md p-1 bg-white dark:bg-black transition-opacity z-10 ${this.tooltipClass[this.orientation]} w-24 ${this.showTooltip ? 'opacity-100' : 'opacity-0'}"
+          class="transition-all duration-300 delay-500 border border-gray-200 dark:border-gray-700 absolute text-center rounded-md p-1 bg-white dark:bg-gray-900 transition-opacity z-10 ${this.tooltipClass[this.orientation]} w-24 ${this.showTooltip ? 'opacity-100' : 'opacity-0'}"
         >
           ${this.text}
         </span>

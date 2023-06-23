@@ -9,7 +9,7 @@ import { loaderStyles } from './loader.styles';
 export class QuiLoader extends StyledElement(loaderStyles) {
   protected render() {
     return html`
-      <div class="class="animate-spin">
+      <div class="animate-spin">
         <fa-icon .icon="${faSpinner}"></fa-icon>
       </div>
     `;

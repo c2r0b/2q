@@ -24,6 +24,7 @@ export const windowOptions = {
     title: '2Q - Add new section',
     width: 600,
     height: 300,
+	resizable: false,
 };
 
 @customElement('add-section')

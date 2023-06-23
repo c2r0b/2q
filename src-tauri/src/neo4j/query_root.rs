@@ -1,14 +1,18 @@
 use async_graphql::{Context, Object};
 use neo4rs::*;
 
-use crate::database::Database;
-use crate::section::Section;
+use crate::neo4j::database::Database;
+use crate::schema::section::Section;
 
 pub struct QueryRoot;
 
 #[Object]
 impl QueryRoot {
-  async fn sections(&self, ctx: &Context<'_>) -> Vec<Section> {
+    async fn has_timetravel_support(&self, ctx: &Context<'_>) -> bool {
+        false
+    }
+
+    async fn sections(&self, ctx: &Context<'_>) -> Vec<Section> {
       let data = ctx.data::<Database>().unwrap();
       let graph = data.graph.clone();
       

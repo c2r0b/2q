@@ -22,5 +22,11 @@ export default {
       },
     },
   },
+  variants: {
+    extend: {
+      backgroundColor: ['disabled'],
+      textColor: ['disabled'],
+    },
+  },
   plugins: []
 }
