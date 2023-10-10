@@ -1,5 +1,4 @@
 import { ApolloClientElement } from '@apollo-elements/components/apollo-client';
-
 import { client } from './client';
 
 // icons setup

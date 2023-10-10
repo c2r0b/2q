@@ -11,12 +11,13 @@ rust-version = "1.59"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.2.1", features = [] }
+tauri-build = { version = "1.5.0", features = [] }
 
 [dependencies]
-tauri = { version = "1.3.0", features = ["api-all"] }
-neo4rs = "0.6.0"
+tauri = { version = "1.5.0", features = ["api-all"] }
 serde = { version = "1.0", features = ["derive"] }
+tauri-plugin-context-menu = "0.5.0"
+indradb-lib = { version = "4.0", features = ["rocksdb-datastore"] }
 tokio = "1.28.1"
 async-graphql = "5.0.8"
 async-graphql-warp = "5.0.8"
@@ -24,6 +25,7 @@ warp = "0.3.5"
 dotenv = "0.15.0"
 async-openai = "0.10.3"
 cocoa = "0.24.1"
+neo4rs = "0.6.0"
 arangors = "0.5.3"
 
 [features]

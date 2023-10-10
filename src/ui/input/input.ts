@@ -7,17 +7,28 @@ export class QuiInput extends StyledElement() {
   @property ({ type: String }) placeholder = undefined;
   @property ({ type: String }) defaultValue = undefined;
   @property ({ type: Boolean }) disabled = false;
+
+  // debounce in milliseconds for input event
+  @property ({ type: Number }) debounce = 0;
+  private debounceTimeout: NodeJS.Timeout | undefined;
   
   @state() private value: string = this.defaultValue || "";
 
   private _handleInput(event: InputEvent) {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+
     const value = (event.target as HTMLInputElement).value;
-    this.dispatchEvent(new CustomEvent('new-value', {
-      detail: {
-        value
-      }
-    }));
     this.value = value;
+
+    this.debounceTimeout = setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('new-value', {
+        detail: {
+          value
+        }
+      }));
+    }, this.debounce);
   }
 
   protected render() {

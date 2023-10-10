@@ -1,3 +1,4 @@
+pub mod indra;
 pub mod arangodb;
 pub mod neo4j;
 pub mod gpt;

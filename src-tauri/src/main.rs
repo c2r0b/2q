@@ -7,15 +7,21 @@ use tauri::{Runtime, Window, Manager};
 use dotenv::dotenv;
 use async_openai::Client;
 use std::env;
+use tokio::sync::mpsc;
 
+mod indra;
 mod arangodb;
 mod neo4j;
 mod gpt;
 mod schema;
 mod settings;
 
+// database support
+use crate::indra::init::init as init_indra;
 use crate::neo4j::init::init as init_neo4j;
 use crate::arangodb::init::init as init_arango;
+
+use crate::schema::utils::Payload;
 
 #[allow(dead_code)]
 pub enum ToolbarThickness {
@@ -54,25 +60,40 @@ unsafe fn make_toolbar(id: cocoa::base::id) {
     id.setToolbar_(new_toolbar);
 }
 
+// initialize the db
+#[tauri::command]
+async fn init_db(window: tauri::Window) {
+    // create a communication for the db init thread
+    let (tx, mut rx) = mpsc::channel::<Payload>(1);
+
+    tokio::spawn(async move {
+        let openai_key = env::var("OPENAI_KEY").expect("OPENAI_KEY must be set.");
+        let client = Client::new().with_api_key(openai_key);
+
+        // support for multiple database types (arango, neo4j, indra)
+        let db_type = env::var("DB_TYPE").ok().unwrap_or_else(|| "indra".to_string());
+        if db_type == "arango" {
+            init_arango(client, tx.clone()).await;
+        }
+        else if db_type == "neo4j" {
+            init_neo4j(client, tx.clone()).await;
+        }
+        else {
+            // use IndraDB locally
+            init_indra(client, tx.clone()).await;
+        }
+    });
+
+    // use the receiver here to prevent it from being dropped
+    while let Some(payload) = rx.recv().await {
+        println!("Received: {:?}", payload);
+        window.emit("db-initialized", ()).unwrap();
+    }
+}
+
 #[tokio::main]
 async fn main() {
     dotenv().ok();
-    tokio::spawn(async {
-        let openai_key = env::var("OPENAI_KEY").expect("OPENAI_KEY must be set.");
-        let client = Client::new().with_api_key(openai_key);
-    
-        // support for multiple database types (arango, neo4j)
-        let db_type = env::var("DB_TYPE").expect("DB_TYPE must be set.");
-        if db_type == "arango" {
-            init_arango(client).await;
-        }
-        else if db_type == "neo4j" {
-            init_neo4j(client).await;
-        }
-        else {
-            panic!("DB_TYPE must be set to either 'arango' or 'neo4j'.");
-        }
-    });
 
     tauri::Builder::default()
     .setup(|app| {
@@ -80,6 +101,8 @@ async fn main() {
         win.set_transparent_titlebar();
         Ok(())
     })
+    .plugin(tauri_plugin_context_menu::init())
+    .invoke_handler(tauri::generate_handler![init_db])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

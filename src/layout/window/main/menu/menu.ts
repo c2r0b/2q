@@ -16,7 +16,9 @@ import { MenuQuery } from './queries/Menu.query.graphql.js';
 
 @customElement('side-menu')
 export class Menu extends StyledElement() {
-  query = new ApolloQueryController(this, MenuQuery);
+  query = new ApolloQueryController(this, MenuQuery, {
+    onError: this.handleError,
+  });
 
   // on section change
   private onMenuEntryClick(path) {
@@ -25,8 +27,16 @@ export class Menu extends StyledElement() {
     }));
   }
 
+  private handleError(error) {
+    alert("Failed to load context sections: " + error.message);
+  }
+
   private async updateData() {
-    await this.query.refetch();
+    try {
+      await this.query.refetch();
+    } catch (error) {
+      this.handleError(error);
+    }
   }
 
   // filter sections by title
