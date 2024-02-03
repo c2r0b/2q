@@ -1,4 +1,4 @@
-use async_graphql::{Context};
+use async_graphql::Context;
 use async_openai::{
     types::{ChatCompletionRequestMessageArgs, CreateChatCompletionRequestArgs, Role},
     Client,
