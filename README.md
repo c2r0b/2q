@@ -43,3 +43,6 @@ TODO
 	DB_USER=neo4j
 	DB_PASSWORD=neo4j
 	OPENAI_KEY=your-openai-key
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
