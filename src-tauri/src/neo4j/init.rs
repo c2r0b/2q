@@ -1,16 +1,16 @@
-use neo4rs::*;
-use async_graphql::{Schema, EmptySubscription};
+use async_graphql::{EmptySubscription, Schema};
 use async_graphql_warp::graphql;
+use async_openai::{config::OpenAIConfig, Client};
+use neo4rs::*;
 use std::convert::Infallible;
-use async_openai::Client;
-use warp::{cors, Filter};
 use std::sync::Arc;
-use tokio::time::{self, Duration};
 use tokio::sync::{broadcast, mpsc};
+use tokio::time::{self, Duration};
+use warp::{cors, Filter};
 
 use crate::neo4j::database::Database;
-use crate::neo4j::query_root::QueryRoot;
 use crate::neo4j::mutation_root::MutationRoot;
+use crate::neo4j::query_root::QueryRoot;
 use crate::schema::utils::Payload;
 
 use crate::settings::get::db_credentials;
@@ -36,31 +36,36 @@ async fn get_db(signal: broadcast::Sender<()>) -> Result<Database> {
                 match graph.execute(query(test_query)).await {
                     Ok(_) => {
                         // Query succeeded, database is ready
-                        let database = Database { graph: Arc::new(graph) };
+                        let database = Database {
+                            graph: Arc::new(graph),
+                        };
                         match signal.send(()) {
-                            Ok(_) => {},
+                            Ok(_) => {}
                             Err(e) => {
                                 println!("Failed to send signal: {}. Continuing...", e);
                             }
                         }
                         return Ok(database);
-                    },
+                    }
                     Err(e) => {
                         // Query failed, database is not ready
                         println!("Failed to verify connection to Neo4j: {}. Retrying...", e);
                         time::sleep(Duration::from_secs(RETRY_INTERVAL)).await; // Retry after 5 seconds
                     }
                 }
-            },
+            }
             Err(e) => {
-                println!("Failed to establish connection to Neo4j: {}. Retrying...", e);
+                println!(
+                    "Failed to establish connection to Neo4j: {}. Retrying...",
+                    e
+                );
                 time::sleep(Duration::from_secs(RETRY_INTERVAL)).await; // Retry after 5 seconds
             }
         }
     }
 }
 
-pub async fn init(client: Client, tx: mpsc::Sender<Payload>) {
+pub async fn init(client: Client<OpenAIConfig>, tx: mpsc::Sender<Payload>) {
     let (signal_sender, _) = broadcast::channel::<()>(1024);
 
     let database = match get_db(signal_sender.clone()).await {
@@ -75,20 +80,27 @@ pub async fn init(client: Client, tx: mpsc::Sender<Payload>) {
         .data(database)
         .data(client)
         .finish();
-    
+
     let cors = cors()
         .allow_any_origin()
         .allow_methods(vec!["GET", "POST", "DELETE"])
         .allow_headers(vec!["content-type", "authorization"]);
 
-    let graphql_post = graphql(schema.clone()).and_then(|(schema, request): (MySchema, async_graphql::Request)| async move {
-        Ok::<_, Infallible>(async_graphql_warp::GraphQLResponse::from(
-            schema.execute(request).await,
-        ))
-    }).with(cors);
+    let graphql_post = graphql(schema.clone())
+        .and_then(
+            |(schema, request): (MySchema, async_graphql::Request)| async move {
+                Ok::<_, Infallible>(async_graphql_warp::GraphQLResponse::from(
+                    schema.execute(request).await,
+                ))
+            },
+        )
+        .with(cors);
 
     // send a signal to the frontend using Tauri's event system
-    if let Err(e) = tx.send(Payload::new("Neo4J successfully connected".into())).await {
+    if let Err(e) = tx
+        .send(Payload::new("Neo4J successfully connected".into()))
+        .await
+    {
         eprintln!("Failed to send message: {:?}", e);
     }
 

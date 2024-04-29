@@ -2,7 +2,6 @@ import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { StyledElement } from '../../../../shared/styled.element';
 import { faEllipsis, faGear, faUser } from '@fortawesome/free-solid-svg-icons';
-import { showMenu } from 'tauri-plugin-context-menu';
 
 import { headerStyles } from './header.styles';
 
@@ -21,54 +20,12 @@ declare const process: {
 export class AppHeader extends StyledElement(headerStyles) {
   private _handleContextClick() {
     return;
-    showMenu({
-      items: [
-        {
-          label: 'My first item',
-          disabled: false,
-          event: 'my_first_item',
-        },
-        {
-          label: 'My second item',
-          disabled: true,
-          event: 'my_second_item',
-        },
-      ],
-    });
   }
 
   private _handleSessionClick() {
-    showMenu({
-      items: [
-        {
-          label: 'My first item',
-          disabled: false,
-          event: 'my_first_item',
-        },
-        {
-          label: 'My second item',
-          disabled: true,
-          event: 'my_second_item',
-        },
-      ],
-    });
   }
 
   private _handleSettingsClick() {
-    showMenu({
-      items: [
-        {
-          label: 'My first item',
-          disabled: false,
-          event: 'my_first_item',
-        },
-        {
-          label: 'My second item',
-          disabled: true,
-          event: 'my_second_item',
-        },
-      ],
-    });
   }
 
   protected render() {

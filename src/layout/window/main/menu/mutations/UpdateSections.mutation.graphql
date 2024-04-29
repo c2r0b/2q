@@ -1,4 +1,4 @@
-mutation UpdateSections($where: SectionWhere, $update: SectionUpdateInput) {
+mutation UpdateSections($where: SectionUpdateWhere, $update: SectionUpdateInput) {
   updateSections(where: $where, update: $update) {
     info {
       nodesCreated

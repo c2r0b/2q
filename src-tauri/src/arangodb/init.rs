@@ -1,17 +1,17 @@
-use arangors::{Connection, ClientError};
-use async_graphql::{Schema, EmptySubscription};
+use arangors::{ClientError, Connection};
+use async_graphql::{EmptySubscription, Schema};
 use async_graphql_warp::graphql;
+use async_openai::{config::OpenAIConfig, Client};
 use std::convert::Infallible;
-use async_openai::Client;
-use warp::{cors, Filter};
-use tokio::sync::{broadcast, mpsc};
 use std::time::Duration;
+use tokio::sync::{broadcast, mpsc};
+use warp::{cors, Filter};
 
-use crate::arangodb::query_root::QueryRoot;
 use crate::arangodb::mutation_root::MutationRoot;
+use crate::arangodb::query_root::QueryRoot;
 
-use crate::settings::get::db_credentials;
 use crate::schema::utils::Payload;
+use crate::settings::get::db_credentials;
 
 type MySchema = Schema<QueryRoot, MutationRoot, EmptySubscription>;
 
@@ -28,7 +28,7 @@ async fn get_conn(signal: broadcast::Sender<()>) -> Result<Connection, ClientErr
         match Connection::establish_jwt(&uri, &user, &pass).await {
             Ok(conn) => {
                 match signal.send(()) {
-                    Ok(_) => {},
+                    Ok(_) => {}
                     Err(e) => {
                         println!("Failed to send signal: {}. Continuing...", e);
                     }
@@ -43,7 +43,7 @@ async fn get_conn(signal: broadcast::Sender<()>) -> Result<Connection, ClientErr
     }
 }
 
-pub async fn init(client: Client, tx: mpsc::Sender<Payload>) {
+pub async fn init(client: Client<OpenAIConfig>, tx: mpsc::Sender<Payload>) {
     let (signal_sender, _) = broadcast::channel::<()>(1024);
 
     let conn = match get_conn(signal_sender.clone()).await {
@@ -71,18 +71,23 @@ pub async fn init(client: Client, tx: mpsc::Sender<Payload>) {
         .allow_methods(vec!["GET", "POST", "DELETE"])
         .allow_headers(vec!["content-type", "authorization"]);
 
-    let graphql_post = graphql(schema.clone()).and_then(|(schema, request): (MySchema, async_graphql::Request)| async move {
-        Ok::<_, Infallible>(async_graphql_warp::GraphQLResponse::from(
-            schema.execute(request).await,
-        ))
-    }).with(cors);
+    let graphql_post = graphql(schema.clone())
+        .and_then(
+            |(schema, request): (MySchema, async_graphql::Request)| async move {
+                Ok::<_, Infallible>(async_graphql_warp::GraphQLResponse::from(
+                    schema.execute(request).await,
+                ))
+            },
+        )
+        .with(cors);
 
     // send a signal to the frontend using Tauri's event system
-    if let Err(e) = tx.send(Payload::new("ArangoDB successfully connected".into())).await {
+    if let Err(e) = tx
+        .send(Payload::new("ArangoDB successfully connected".into()))
+        .await
+    {
         eprintln!("Failed to send message: {:?}", e);
     }
 
     warp::serve(graphql_post).run(([127, 0, 0, 1], 8000)).await;
 }
-
-
