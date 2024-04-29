@@ -1,7 +1,7 @@
 import { ApolloMutationController } from '@apollo-elements/core';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { confirm } from '@tauri-apps/api/dialog';
+import { confirm } from '@tauri-apps/plugin-dialog';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';
 
 import { DeleteSections } from './mutations/DeleteSections.mutation.graphql.js';

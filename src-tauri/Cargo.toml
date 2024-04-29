@@ -8,23 +8,29 @@ repository = ""
 edition = "2021"
 rust-version = "1.59"
 
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib", "lib"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.2.1", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
-tauri = { version = "1.3.0", features = ["api-all"] }
-neo4rs = "0.6.0"
+tauri = { version = "2.0.0-beta", features = [] }
 serde = { version = "1.0", features = ["derive"] }
+indradb-lib = { version = "4.0", features = ["rocksdb-datastore"] }
 tokio = "1.28.1"
-async-graphql = "5.0.8"
-async-graphql-warp = "5.0.8"
+async-graphql = "7.0.3"
+async-graphql-warp = "7.0.3"
 warp = "0.3.5"
 dotenv = "0.15.0"
-async-openai = "0.10.3"
-cocoa = "0.24.1"
-arangors = "0.5.3"
+async-openai = "0.20.0"
+cocoa = "0.25.0"
+neo4rs = "0.7.1"
+arangors = "0.5.4"
+tauri-plugin-dialog = "2.0.0-beta.6"
 
 [features]
 # by default Tauri runs in production mode

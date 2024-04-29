@@ -18,8 +18,12 @@ type Section {
 type Query {
   location: Location
   selMovie: String
-  sections: [Section]
+  sections(where: SectionWhere): [Section]
   hasTimetravelSupport: Boolean
+}
+
+input SectionWhere {
+  title: String
 }
 
 type CreateInfo {
@@ -36,21 +40,25 @@ type DeleteResults {
 
 type Mutation {
   createSections(input: [SectionCreateInput]): CreateResults
-  updateSections(where: SectionWhere, update: SectionUpdateInput): CreateResults
-  deleteSections(where: SectionWhere): DeleteResults
+  updateSections(where: SectionUpdateWhere, update: SectionUpdateInput): CreateResults
+  deleteSections(where: SectionDeleteWhere): DeleteResults
   sendChatMessage(message: String!): String
 }
 
-type SectionWhere {
-  id: ID!
-}
-
-type SectionCreateInput {
+input SectionCreateInput {
   id: ID!
   title: String!
   description: String!
 }
 
-type SectionUpdateInput {
+input SectionUpdateWhere {
+  id: ID!
+}
+
+input SectionDeleteWhere {
+  id: ID!
+}
+
+input SectionUpdateInput {
   title: String!
 }

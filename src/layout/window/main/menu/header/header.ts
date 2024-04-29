@@ -12,6 +12,9 @@ export class AsideHeader extends StyledElement() {
 
   private _handleFilterInput(e) {
     this.sectionTitle = e.detail.value as string || "";
+    this.dispatchEvent(new CustomEvent('filterChange', {
+      detail: { message: this.sectionTitle }
+    }));
   }
 
   private _handleRefresh() {
@@ -23,6 +26,7 @@ export class AsideHeader extends StyledElement() {
       <div class="flex gap-2 px-3 py-2">
         <qui-input
           placeholder="Filter sections"
+          debounce=500
           .value=${this.sectionTitle}
           @new-value=${this._handleFilterInput}
         ></qui-input>

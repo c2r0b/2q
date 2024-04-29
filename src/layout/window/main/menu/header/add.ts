@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { invoke } from '@tauri-apps/api';
 import { WebviewWindow } from '@tauri-apps/api/window';
 import { listen } from '@tauri-apps/api/event';
 

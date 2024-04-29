@@ -1,4 +1,4 @@
-mutation DeleteSections($where: SectionWhere) {
+mutation DeleteSections($where: SectionDeleteWhere) {
   deleteSections(where: $where) {
     nodesDeleted
   }
