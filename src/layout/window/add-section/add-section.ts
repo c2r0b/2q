@@ -3,7 +3,7 @@ import { html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { v4 as uuid } from 'uuid';
 import { StyledElement } from '../../../shared/styled.element';
-import { appWindow } from '@tauri-apps/api/window';
+//import { appWindow } from '@tauri-apps/api/webviewWindow';
 import { emit } from '@tauri-apps/api/event';
 
 import '../../../ui/button';
@@ -86,7 +86,7 @@ export class AddSection extends StyledElement() {
 
 		// close the window
 		await emit('section-created');
-		await appWindow.close();
+		//await appWindow.close();
 	}
 
 	private isLoading() {

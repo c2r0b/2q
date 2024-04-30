@@ -66,8 +66,6 @@ async fn init_db(window: tauri::Window) {
         let config = OpenAIConfig::default().with_api_key(openai_key);
         let client: Client<OpenAIConfig> = Client::with_config(config);
 
-        eprintln!("test")
-
         // support for multiple database types (arango, neo4j, indra)
         let db_type = env::var("DB_TYPE")
             .ok()

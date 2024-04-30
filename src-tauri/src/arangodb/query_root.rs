@@ -21,7 +21,6 @@ impl QueryRoot {
             let _ = db.create_collection("Section").await.unwrap();
         }
 
-        let collection = db.collection("Section").await.unwrap();
         let query = match &r#where {
             Some(filter) => {
                 let mut query = "FOR s IN Section".to_string();

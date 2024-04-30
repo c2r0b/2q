@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { listen } from '@tauri-apps/api/event';
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 import { StyledElement } from '../../../shared/styled.element';
 
 import './menu';
@@ -28,7 +28,7 @@ export class MainWindow extends StyledElement() {
       clearTimeout(retryTimeout);
       unlisten();
     });
-
+    
     invoke('init_db').then(async () => {
       this.status = 'Almost there ...';
     });
