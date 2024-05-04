@@ -18,7 +18,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-beta", features = [] }
+tauri = { version = "2.0.0-beta", features = ["unstable"] }
 serde = { version = "1.0", features = ["derive"] }
 indradb-lib = { version = "4.0", features = ["rocksdb-datastore"] }
 tokio = "1.28.1"

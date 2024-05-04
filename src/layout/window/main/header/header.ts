@@ -1,14 +1,13 @@
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { StyledElement } from "../../../../shared/styled.element";
-import { faEllipsis, faGear, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faGear } from "@fortawesome/free-solid-svg-icons";
 
 import { headerStyles } from "./header.styles";
 
 import "../footer";
 import "../../../../ui/button";
 import "../../../../ui/tooltip";
-import "../../../../ui/context-menu";
 
 declare const process: {
   env: {
