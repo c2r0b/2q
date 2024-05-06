@@ -2,7 +2,7 @@
   "identifier": "migrated",
   "description": "permissions that were migrated from v1",
   "local": true,
-  "windows": ["main"],
+  "windows": ["main", "addNewSection"],
   "permissions": [
     "path:default",
     "event:default",
@@ -12,6 +12,7 @@
     "menu:default",
     "tray:default",
     "window:allow-create",
-    "webview:allow-create-webview"
+    "webview:allow-create-webview",
+    "dialog:allow-confirm"
   ]
 }

@@ -1,72 +1,81 @@
-use async_graphql::{Context, Object, FieldResult};
-use neo4rs::*;
+use async_graphql::{Context, FieldResult, Object};
 
-use crate::neo4j::database::Database;
-use crate::schema::section::{SectionCreateInput, SectionWhere, SectionUpdateInput, CreateResults, UpdateResults, DeleteResults, Info};
 use crate::gpt::chat::send_chat_message;
+use crate::indra::database::Database;
+use crate::schema::section::{
+    CreateResults, DeleteResults, Info, SectionCreateInput, SectionDeleteWhere, SectionUpdateInput,
+    SectionUpdateWhere, UpdateResults,
+};
+use indradb::{BulkInsertItem, Identifier, Json, SpecificVertexQuery, Vertex};
+use uuid::Uuid;
 
 pub struct MutationRoot;
 
 #[Object]
 impl MutationRoot {
-    async fn send_chat_message(&self, ctx: &Context<'_>, message: String) -> async_graphql::Result<String> {
+    async fn send_chat_message(
+        &self,
+        ctx: &Context<'_>,
+        message: String,
+    ) -> async_graphql::Result<String> {
         send_chat_message(ctx, message).await
     }
 
-    async fn create_sections(&self, ctx: &Context<'_>, input: Vec<SectionCreateInput>) -> FieldResult<CreateResults> {
-      let data = ctx.data::<Database>()?;
-      let graph = data.graph.clone();
-      
-      let mut nodes_created = 0;
+    async fn create_sections(
+        &self,
+        ctx: &Context<'_>,
+        input: Vec<SectionCreateInput>,
+    ) -> FieldResult<CreateResults> {
+        let data = ctx.data::<Database>()?;
+        let store = data.graph.clone();
 
-      for section in input {
-          let mut result = graph.execute(
-              query("CREATE (s:Section { id: $id, title: $title, description: $description }) RETURN s")
-              .param("id", section.id)
-              .param("title", section.title)
-              .param("description", section.description)
-          ).await?;
+        let vertex_type = Identifier::new("Section")?;
 
-          if let Ok(Some(_)) = result.next().await {
-              nodes_created += 1;
-          }
-      }
+        let mut nodes_created = 0;
 
-      Ok(CreateResults { info: Info { nodes_created } })
-  }
+        for section in input {
+            let uuid = Uuid::parse_str(&section.id)?;
+            let vertex = BulkInsertItem::Vertex(Vertex::with_id(uuid, vertex_type));
 
-  async fn delete_sections(&self, ctx: &Context<'_>, r#where: SectionWhere) -> FieldResult<DeleteResults> {
-      let data = ctx.data::<Database>()?;
-      let graph = data.graph.clone();
-      
-      let mut result = graph.execute(
-          query("MATCH (s:Section) WHERE s.id = $id DELETE s")
-          .param("id", &*r#where.id)
-      ).await?;
+            let property = BulkInsertItem::VertexProperty(
+                uuid,
+                Identifier::new("title")?,
+                Json::new(serde_json::Value::String(section.title.clone())),
+            );
 
-      let mut nodes_deleted = 0;
-      while let Ok(Some(_)) = result.next().await {
-          nodes_deleted += 1;
-      }
+            store.bulk_insert(vec![vertex, property]);
+            nodes_created += 1;
+        }
 
-      Ok(DeleteResults { nodes_deleted })
-  }
+        Ok(CreateResults {
+            info: Info { nodes_created },
+        })
+    }
 
-  async fn update_sections(&self, ctx: &Context<'_>, r#where: SectionWhere, update: SectionUpdateInput) -> FieldResult<UpdateResults> {
-      let data = ctx.data::<Database>()?;
-      let graph = data.graph.clone();
-      
-      let mut result = graph.execute(
-          query("MATCH (s:Section) WHERE s.id = $where_id SET s.title = $update_title RETURN s")
-          .param("where_id", &*r#where.id)
-          .param("update_title", &*update.title)
-      ).await?;
+    async fn delete_sections(
+        &self,
+        ctx: &Context<'_>,
+        r#where: SectionDeleteWhere,
+    ) -> FieldResult<DeleteResults> {
+        let data = ctx.data::<Database>()?;
+        let store = data.graph.clone();
 
-      let mut nodes_created = 0;
-      while let Ok(Some(_)) = result.next().await {
-          nodes_created += 1;
-      }
+        let uuid = Uuid::parse_str(&r#where.id)?;
+        let q = SpecificVertexQuery::single(uuid);
 
-      Ok(UpdateResults { info: Info { nodes_created } })
-  }
+        store.delete(q);
+
+        Ok(DeleteResults { nodes_deleted: 1 })
+    }
+
+    async fn update_sections(
+        &self,
+        ctx: &Context<'_>,
+        r#where: SectionUpdateWhere,
+        update: SectionUpdateInput,
+    ) -> FieldResult<UpdateResults> {
+        Ok(UpdateResults {
+            info: Info { nodes_created: 0 },
+        })
+    }
 }

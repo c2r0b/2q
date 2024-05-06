@@ -1,5 +1,5 @@
-import { html } from 'lit';
-import '../ui/toggle/toggle';
+import { html } from "lit";
+import "../shared/ui/toggle/toggle";
 
 export interface QuiToggleProps {
   /**
@@ -9,7 +9,7 @@ export interface QuiToggleProps {
    * @memberof QuiToggleProps
    * @example
    * <qui-toggle label="Toggle"></qui-toggle>
-  */
+   */
   label?: string;
   /**
    * Callback function for when the toggle is clicked
@@ -18,7 +18,7 @@ export interface QuiToggleProps {
    * @memberof QuiToggleProps
    * @example
    * <qui-toggle onClick={() => console.log("clicked")}></qui-toggle>
-  */
+   */
   onClick?: () => void;
 }
 
@@ -26,7 +26,7 @@ export interface QuiToggleProps {
  * Toggle component
  * @example
  * <qui-toggle label="Toggle" onClick={() => console.log("clicked")}></qui-toggle>
-*/
+ */
 export const QuiToggle = ({ label, onClick }: QuiToggleProps) => html`
   <qui-toggle .label=${label} @click=${onClick}></qui-toggle>
 `;
