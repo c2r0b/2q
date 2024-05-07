@@ -4,7 +4,9 @@ import { StyledElement } from "../../../../shared/styled.element";
 
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 
-import "../../../../shared/ui/tooltip";
+import "@carbon/web-components/es/components/search/index.js";
+import "@carbon/web-components/es/components/tooltip/index.js";
+import "@carbon/web-components/es/components/button/index.js";
 
 @customElement("aside-header")
 export class AsideHeader extends StyledElement() {
@@ -26,19 +28,32 @@ export class AsideHeader extends StyledElement() {
   protected render() {
     return html`
       <div class="flex gap-2 px-3 py-2">
-        <qui-input
+        <cds-search
+          label-text="Search"
+          size="sm"
+          type="text"
           placeholder="Filter sections"
-          debounce="500"
-          .value=${this.sectionTitle}
-          @new-value=${this._handleFilterInput}
-        ></qui-input>
-        <qui-tooltip text="Refresh" orientation="below">
-          <qui-button
+          value=${this.sectionTitle}
+          @cds-search-input=${this._handleFilterInput}
+        ></cds-search>
+
+        <cds-tooltip align="bottom">
+          <cds-button
             aria-label="Refresh sections"
-            .icon=${faSync}
+            action="flat-inline"
+            size="sm"
+            hasIconOnly
+            kind="secondary"
+            tooltip="Refresh"
             @click=${this._handleRefresh}
-          ></qui-button>
-        </qui-tooltip>
+          >
+            <fa-icon .icon=${faSync}></fa-icon>
+          </cds-button>
+          <cds-tooltip-content>
+            <span>Refresh</span>
+          </cds-tooltip-content>
+        </cds-tooltip>
+
         <add-btn @add="${this._handleRefresh}"></add-btn>
       </div>
     `;

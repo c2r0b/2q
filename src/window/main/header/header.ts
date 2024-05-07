@@ -6,8 +6,8 @@ import { faEllipsis, faGear } from "@fortawesome/free-solid-svg-icons";
 import { headerStyles } from "./header.styles";
 
 import "../footer";
-import "../../../shared/ui/button";
-import "../../../shared/ui/tooltip";
+import "@carbon/web-components/es/components/button/index.js";
+import "@carbon/web-components/es/components/tooltip/index.js";
 
 declare const process: {
   env: {
@@ -37,21 +37,29 @@ export class AppHeader extends StyledElement(headerStyles) {
         </div>
         <div>
           <div class="flex flex-col gap-2 px-4 py-3">
-            <qui-tooltip text="Context" orientation="right">
-              <qui-button
+            <cds-tooltip align="right">
+              <cds-button
                 aria-label="Change selected context"
-                .icon="${faEllipsis}"
                 disabled
                 @click="${this._handleContextClick}"
-              ></qui-button>
-            </qui-tooltip>
-            <qui-tooltip text="Settings" orientation="right">
-              <qui-button
+              >
+                <fa-icon .icon=${faEllipsis}></fa-icon>
+              </cds-button>
+              <cds-tooltip-content>
+                <span>Context</span>
+              </cds-tooltip-content>
+            </cds-tooltip>
+            <cds-tooltip align="right">
+              <cds-button
                 aria-label="Settings"
-                .icon="${faGear}"
                 @click="${this._handleSettingsClick}"
-              ></qui-button>
-            </qui-tooltip>
+              >
+                <fa-icon .icon=${faGear}></fa-icon>
+              </cds-button>
+              <cds-tooltip-content>
+                <span>Settings</span>
+              </cds-tooltip-content>
+            </cds-tooltip>
           </div>
           <app-footer>
             <span>v${process.env.PACKAGE_VERSION}</span>

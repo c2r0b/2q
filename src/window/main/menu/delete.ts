@@ -6,7 +6,7 @@ import { faRemove } from "@fortawesome/free-solid-svg-icons";
 
 import { DeleteSections } from "./mutations/DeleteSections.mutation.graphql.js";
 
-import "../../../shared/ui/button/index.js";
+import "@carbon/web-components/es/components/button/index.js";
 
 @customElement("delete-btn")
 export class DeleteButton extends LitElement {
@@ -31,11 +31,12 @@ export class DeleteButton extends LitElement {
 
   protected render() {
     return html`
-      <qui-button
+      <cds-button
         aria-label="Delete section"
-        .icon="${faRemove}"
         @click="${this._handleDeleteClick}"
-      />
+      >
+        <fa-icon .icon=${faRemove}></fa-icon>
+      </cds-button>
     `;
   }
 }

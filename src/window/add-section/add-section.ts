@@ -6,15 +6,9 @@ import { StyledElement } from "../../shared/styled.element";
 import { Window } from "@tauri-apps/api/window";
 import { emit } from "@tauri-apps/api/event";
 
-import "../../shared/ui/button";
-import "../../shared/ui/textarea";
-import "../../shared/ui/loader";
-import "../../shared/ui/field";
-import "../../shared/ui/input";
-import "../../shared/ui/picker/icon";
-import "../../shared/ui/modal/modal-container";
-import "../../shared/ui/modal/modal-form";
-import "../../shared/ui/modal/modal-footer";
+import "@carbon/web-components/es/components/button/index.js";
+import "@carbon/web-components/es/components/text-input/index.js";
+import "@carbon/web-components/es/components/textarea/index.js";
 
 import { SendChatMessage } from "../../shared/mutations/SendChatMessage.mutation.graphql.js";
 import { CreateSections } from "./mutations/CreateSections.mutation.graphql.js";
@@ -104,41 +98,38 @@ export class AddSection extends StyledElement() {
         <modal-form>
           <div class="flex flex-row gap-3">
             <qui-field label="Title">
-              <qui-input
+              <cds-text-input
                 placeholder="Section title"
                 ?disabled=${this.isLoading()}
-                .value=${this.sectionTitle}
+                value=${this.sectionTitle}
                 @new-value=${this._handleTitleInput}
-              ></qui-input>
+              ></cds-text-input>
             </qui-field>
             <qui-field label="Icon">
               <qui-icon-picker></qui-icon-picker>
             </qui-field>
-            <qui-field label="Parent">
-              <qui-select
-                ?disabled=${this.isLoading()}
-                .value=${this.sectionParent}
-              >
-                <option value="0">None</option>
-              </qui-select>
-            </qui-field>
-          </div>
-          <qui-field label="Description">
-            <qui-textarea
-              placeholder="Create a new section to..."
+            <cds-select
+              label-text="Parent"
               ?disabled=${this.isLoading()}
-              @new-value=${this._handleDescriptionInput}
-            ></qui-textarea>
-          </qui-field>
+              .value=${this.sectionParent}
+            >
+              <option value="0">None</option>
+            </cds-select>
+          </div>
+          <cds-textarea
+            placeholder="Create a new section to..."
+            ?disabled=${this.isLoading()}
+            @new-value=${this._handleDescriptionInput}
+          ></cds-textarea>
         </modal-form>
         <modal-footer>
-          <qui-button
+          <cds-button
             aria-label="Save section"
             ?disabled=${this.isLoading()}
             @click=${() => this._handleProceed()}
           >
             Proceed
-          </qui-button>
+          </cds-button>
           <qui-loader ?hidden=${!this.isLoading()}></qui-loader>
         </modal-footer>
       </modal-container>

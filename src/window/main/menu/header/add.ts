@@ -5,8 +5,8 @@ import { Window } from "@tauri-apps/api/window";
 import { Webview } from "@tauri-apps/api/webview";
 import { listen } from "@tauri-apps/api/event";
 
-import "../../../../shared/ui/tooltip";
-import "../../../../shared/ui/button";
+import "@carbon/web-components/es/components/tooltip/index.js";
+import "@carbon/web-components/es/components/button/index.js";
 
 import { windowOptions as SectionWindowOptions } from "../../../add-section/add-section";
 
@@ -35,13 +35,19 @@ export class AddButton extends LitElement {
 
   protected render() {
     return html`
-      <qui-tooltip text="New section" orientation="below">
-        <qui-button
+      <cds-tooltip align="bottom">
+        <cds-button
           aria-label="Add new section"
-          .icon="${faPlus}"
+          size="sm"
+          kind="primary"
           @click="${this._handleAddClick}"
-        />
-      </qui-tooltip>
+        >
+          <fa-icon .icon=${faPlus}></fa-icon>
+        </cds-button>
+        <cds-tooltip-content>
+          <span>Add new section</span>
+        </cds-tooltip-content>
+      </cds-tooltip>
     `;
   }
 }

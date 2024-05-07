@@ -5,7 +5,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 import { UpdateSections } from "./mutations/UpdateSections.mutation.graphql.js";
 
-import "../../../shared/ui/button/index.js";
+import "@carbon/web-components/es/components/button/index.js";
 
 @customElement("edit-btn")
 export class EditButton extends LitElement {
@@ -36,11 +36,9 @@ export class EditButton extends LitElement {
 
   protected render() {
     return html`
-      <qui-button
-        aria-label="Edit section"
-        .icon="${faEdit}"
-        @click="${this._handleEditClick}"
-      />
+      <cds-button aria-label="Edit section" @click="${this._handleEditClick}">
+        <fa-icon .icon=${faEdit}></fa-icon>
+      </cds-button>
     `;
   }
 }

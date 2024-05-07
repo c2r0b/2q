@@ -2,10 +2,7 @@ import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { StyledElement } from "../../shared/styled.element";
 
-import "../../shared/ui/button";
-import "../../shared/ui/modal/modal-container";
-import "../../shared/ui/modal/modal-form";
-import "../../shared/ui/modal/modal-footer";
+import "@carbon/web-components/es/components/button/index.js";
 
 export const windowOptions = {
   url: "/add-context",
@@ -76,7 +73,7 @@ export class CustomSetupWindow extends StyledElement() {
           </qui-field>
         </modal-form>
         <modal-footer>
-          <qui-button aria-label="Proceed"> Proceed </qui-button>
+          <cds-button aria-label="Proceed">Proceed</cds-button>
         </modal-footer>
       </modal-container>
     `;
