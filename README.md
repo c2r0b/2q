@@ -14,16 +14,16 @@ TODO
 ## Development
 
 ### Requirements
- - [Node](https://nodejs.org/en/) (v18.x) with [npm](https://www.npmjs.com/)
- - [Rust](https://www.rust-lang.org/) (v1.55.x)
+ - [Node](https://nodejs.org/en/) (v18+)
+ - [Rust](https://www.rust-lang.org/) (v1.55+)
 
 ### Tech Stack
-* [Lit](https://lit.dev/) for [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-* [Apollo Client](https://github.com/apollographql/apollo-client) with [GraphQL](https://graphql.org/)
-* [GPT-3](https://openai.com/blog/openai-api/) (natural language processing)
+* [Lit](https://lit.dev/) (frontend) with [Apollo Client](https://github.com/apollographql/apollo-client) (GraphQL)
 * [Tauri](https://tauri.studio/en/) (desktop app) with [Rust](https://www.rust-lang.org/) (backend)
 * [Tailwind](https://tailwindcss.com/) (CSS) with [FontAwesome](https://fontawesome.com/) (icons)
-* [Storybook](https://storybook.js.org/) (component library)
+
+### LLM support
+* [GPT-3](https://openai.com/blog/openai-api/) (OpenAI)
 
 ### Database support
 * [IndraDB](https://github.com/indradb/indradb) (embedded)
