@@ -1,5 +1,5 @@
 use async_graphql::{Context, Object};
-use indradb::{Identifier, QueryOutputValue, RangeVertexQuery};
+use indradb::{Datastore, Identifier, QueryOutputValue, RangeVertexQuery, Transaction};
 
 use crate::indra::database::Database;
 use crate::schema::section::{Section, SectionFilter};
@@ -14,7 +14,7 @@ impl QueryRoot {
 
     async fn sections(&self, ctx: &Context<'_>, r#where: Option<SectionFilter>) -> Vec<Section> {
         let data = ctx.data::<Database>().unwrap();
-        let db = data.graph.clone();
+        let store: std::sync::Arc<indradb::Database<indradb::MemoryDatastore>> = data.graph.clone();
 
         let q: RangeVertexQuery = RangeVertexQuery {
             limit: 4_294_967_294u32,
@@ -23,15 +23,20 @@ impl QueryRoot {
         }
         .into();
 
-        let result: Vec<QueryOutputValue> = db.get(q).unwrap();
-        let vertices = indradb::util::extract_vertices(result).unwrap();
+        let result: Vec<QueryOutputValue> = store.get(q).unwrap();
 
+        let transaction = store.datastore.transaction();
+        let vertices = indradb::util::extract_vertices(result).unwrap();
         let mut sections = vec![];
 
         for vertex in vertices {
-            // TODO
             let id = vertex.id.to_string();
-            let title = "SomeTitle".to_string();
+
+            let title_identifier = Identifier::new("title").unwrap();
+            let title_json: Option<indradb::Json> = transaction
+                .vertex_property(&vertex, title_identifier)
+                .unwrap();
+            let title = serde_json::to_string(&title_json).unwrap();
 
             sections.push(Section { id, title });
         }

@@ -1,5 +1,5 @@
-use async_graphql::{Object, InputObject, SimpleObject};
-use serde::{Serialize, Deserialize};
+use async_graphql::{InputObject, Object, SimpleObject};
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Section {
@@ -48,6 +48,16 @@ pub struct DeleteResults {
 
 #[derive(InputObject)]
 pub struct SectionWhere {
+    pub id: String,
+}
+
+#[derive(InputObject)]
+pub struct SectionUpdateWhere {
+    pub id: String,
+}
+
+#[derive(InputObject)]
+pub struct SectionDeleteWhere {
     pub id: String,
 }
 

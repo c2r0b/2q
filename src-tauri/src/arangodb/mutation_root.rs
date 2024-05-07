@@ -1,11 +1,14 @@
-use async_graphql::{Context, Object, FieldResult};
-use arangors::{Document};
-use arangors::document::options::{InsertOptions, UpdateOptions, RemoveOptions};
-use serde::{Serialize, Deserialize};
+use arangors::document::options::{InsertOptions, RemoveOptions, UpdateOptions};
+use arangors::Document;
+use async_graphql::{Context, FieldResult, Object};
+use serde::{Deserialize, Serialize};
 
 use crate::arangodb::conn::get_conn;
-use crate::schema::section::{SectionCreateInput, SectionWhere, SectionUpdateInput, CreateResults, UpdateResults, DeleteResults, Info};
 use crate::gpt::chat::send_chat_message;
+use crate::schema::section::{
+    CreateResults, DeleteResults, Info, SectionCreateInput, SectionUpdateInput, SectionWhere,
+    UpdateResults,
+};
 
 #[derive(Serialize, Deserialize)]
 struct Section {
@@ -20,16 +23,24 @@ pub struct MutationRoot;
 
 #[Object]
 impl MutationRoot {
-    async fn send_chat_message(&self, ctx: &Context<'_>, message: String) -> async_graphql::Result<String> {
+    async fn send_chat_message(
+        &self,
+        ctx: &Context<'_>,
+        message: String,
+    ) -> async_graphql::Result<String> {
         send_chat_message(ctx, message).await
     }
 
-    async fn create_sections(&self, ctx: &Context<'_>, input: Vec<SectionCreateInput>) -> FieldResult<CreateResults> {
+    async fn create_sections(
+        &self,
+        _ctx: &Context<'_>,
+        input: Vec<SectionCreateInput>,
+    ) -> FieldResult<CreateResults> {
         //TODO: let db = ctx.data::<Database<Connection>>()?;
         let db = get_conn().await?.db("toq").await.unwrap();
         let collection = db.collection("Section").await.unwrap();
         let mut nodes_created = 0;
-    
+
         for section in input.clone() {
             let document = Document::new(Section {
                 _key: section.id.clone(),
@@ -38,27 +49,42 @@ impl MutationRoot {
                 title: section.title.clone(),
                 description: section.description.clone(),
             });
-            let _ = collection.create_document(document, InsertOptions::default()).await.unwrap();
+            let _ = collection
+                .create_document(document, InsertOptions::default())
+                .await
+                .unwrap();
             nodes_created += 1;
         }
-    
+
         let nodes_created = input.len() as i32;
         let info = Info { nodes_created };
         let result = CreateResults { info };
-    
+
         Ok(result)
     }
 
-    async fn delete_sections(&self, ctx: &Context<'_>, r#where: SectionWhere) -> FieldResult<DeleteResults> {
+    async fn delete_sections(
+        &self,
+        _ctx: &Context<'_>,
+        r#where: SectionWhere,
+    ) -> FieldResult<DeleteResults> {
         let conn = get_conn().await?;
         let db = conn.db("toq").await.unwrap();
         let collection = db.collection("Section").await.unwrap();
-        let _ = collection.remove_document::<Document<()>>(&r#where.id, RemoveOptions::default(), None).await.unwrap();
+        let _ = collection
+            .remove_document::<Document<()>>(&r#where.id, RemoveOptions::default(), None)
+            .await
+            .unwrap();
 
         Ok(DeleteResults { nodes_deleted: 1 })
     }
 
-    async fn update_sections(&self, ctx: &Context<'_>, r#where: SectionWhere, update: SectionUpdateInput) -> FieldResult<UpdateResults> {
+    async fn update_sections(
+        &self,
+        _ctx: &Context<'_>,
+        r#where: SectionWhere,
+        update: SectionUpdateInput,
+    ) -> FieldResult<UpdateResults> {
         let conn = get_conn().await?;
         let db = conn.db("toq").await.unwrap();
         let collection = db.collection("Section").await.unwrap();
@@ -67,8 +93,13 @@ impl MutationRoot {
 
         let mut doc: Document<Section> = collection.document(&r#where.id).await.unwrap();
         doc.document.title = update.title.clone();
-        let _ = collection.update_document(&r#where.id, doc.document, UpdateOptions::default()).await.unwrap();
+        let _ = collection
+            .update_document(&r#where.id, doc.document, UpdateOptions::default())
+            .await
+            .unwrap();
 
-        Ok(UpdateResults { info: Info { nodes_created: 1 } })
+        Ok(UpdateResults {
+            info: Info { nodes_created: 1 },
+        })
     }
 }
