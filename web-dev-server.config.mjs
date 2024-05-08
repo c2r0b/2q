@@ -4,7 +4,6 @@ import { resolveCodegenPlugin } from "@apollo-elements/create/helpers.js";
 
 import rollupPostcss from "rollup-plugin-postcss";
 import rollupPostcssLit from "rollup-plugin-postcss-lit";
-
 import { buildConfig } from "./esbuild.config.js";
 
 const postcssPlugin = fromRollup(rollupPostcss);

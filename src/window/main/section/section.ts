@@ -14,11 +14,13 @@ export class SectionContent extends StyledElement() {
 
   protected render() {
     return html`
-      <container class="flex-none w-2/3 p-5">
-        <dt>Pathname</dt>
-        <entries-list sectionId="${this._sectionId}"></entries-list>
-      </container>
-      <section-footer></section-footer>
+      <div class="flex flex-col h-full justify-between">
+        <container class="flex-none w-2/3 p-5">
+          <dt>Pathname</dt>
+          <entries-list sectionId="${this._sectionId}"></entries-list>
+        </container>
+        <section-footer></section-footer>
+      </div>
     `;
   }
 }

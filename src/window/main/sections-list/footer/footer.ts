@@ -5,11 +5,10 @@ import { StyledElement } from "../../../../shared/styled.element";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 
 import "@carbon/web-components/es/components/search/index.js";
-import "@carbon/web-components/es/components/tooltip/index.js";
-import "@carbon/web-components/es/components/button/index.js";
+import "@carbon/web-components/es/components/icon-button/index.js";
 
-@customElement("aside-header")
-export class AsideHeader extends StyledElement() {
+@customElement("sections-list-footer")
+export class SectionsListFooter extends StyledElement() {
   @state() private sectionTitle: string = "";
 
   private _handleFilterInput(e) {
@@ -27,32 +26,26 @@ export class AsideHeader extends StyledElement() {
 
   protected render() {
     return html`
-      <div class="flex gap-2 px-3 py-2">
+      <div class="flex bg-white dark:bg-gray-800">
         <cds-search
           label-text="Search"
-          size="sm"
           type="text"
+          size="lg"
           placeholder="Filter sections"
           value=${this.sectionTitle}
           @cds-search-input=${this._handleFilterInput}
         ></cds-search>
 
-        <cds-tooltip align="bottom">
-          <cds-button
-            aria-label="Refresh sections"
-            action="flat-inline"
-            size="sm"
-            hasIconOnly
-            kind="secondary"
-            tooltip="Refresh"
-            @click=${this._handleRefresh}
-          >
-            <fa-icon .icon=${faSync}></fa-icon>
-          </cds-button>
-          <cds-tooltip-content>
-            <span>Refresh</span>
-          </cds-tooltip-content>
-        </cds-tooltip>
+        <cds-icon-button
+          aria-label="Refresh sections"
+          action="flat-inline"
+          size="lg"
+          kind="ghost"
+          @click=${this._handleRefresh}
+        >
+          <fa-icon .icon=${faSync}></fa-icon>
+          <span slot="tooltip-content">Refresh</span>
+        </cds-icon-button>
 
         <add-btn @add="${this._handleRefresh}"></add-btn>
       </div>

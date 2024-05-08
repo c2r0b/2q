@@ -5,16 +5,15 @@ import { StyledElement } from "../../../shared/styled.element";
 
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
-import "./header";
 import "./footer";
 
-import "./header/add.js";
+import "./footer/add.js";
 import "./edit.js";
 import "./delete.js";
 
 import { MenuQuery } from "./queries/Menu.query.graphql.js";
 
-@customElement("side-menu")
+@customElement("sections-list-menu")
 export class Menu extends StyledElement() {
   query = new ApolloQueryController(this, MenuQuery, {
     onError: this.handleError,
@@ -53,12 +52,8 @@ export class Menu extends StyledElement() {
     const sections = this.query.data?.sections ?? [];
     return html`
       <aside
-        class="flex-none w-64 h-full relative border-r border-r-gray-200 dark:border-r-gray-700"
+        class="flex flex-col h-full justify-between w-64 relative border-r border-r-gray-200 dark:border-r-gray-700"
       >
-        <aside-header
-          @refresh="${this.updateData}"
-          @filterChange="${this.onFilterChange}"
-        ></aside-header>
         <ul class="w-100 list-none">
           ${sections.map((s) => {
             return html`
@@ -84,7 +79,10 @@ export class Menu extends StyledElement() {
             `;
           })}
         </ul>
-        <aside-footer></aside-footer>
+        <sections-list-footer
+          @refresh="${this.updateData}"
+          @filterChange="${this.onFilterChange}"
+        ></sections-list-footer>
       </aside>
     `;
   }

@@ -1,6 +1,8 @@
 import { ApolloClientElement } from "@apollo-elements/components/apollo-client";
 import { client } from "./client";
 
+import './style.css';
+
 // icons setup
 import { FontAwesomeIcon } from "@riovir/wc-fontawesome";
 customElements.define("fa-icon", FontAwesomeIcon);

@@ -1,11 +1,11 @@
 import { LitElement, unsafeCSS } from "lit";
 
-import tailwindElement from "./styled.global.css?inline";
+import globalStyles from "./styled.global.scss";
 
 export const StyledElement = (style = undefined) => {
   return class extends LitElement {
     static styles = style
-      ? [unsafeCSS(tailwindElement), unsafeCSS(style)]
-      : [unsafeCSS(tailwindElement)];
+      ? [unsafeCSS(globalStyles), unsafeCSS(style)]
+      : [unsafeCSS(globalStyles)];
   };
 };
