@@ -2,9 +2,9 @@ import { customElement } from "lit/decorators.js";
 import { StyledElement } from "../shared/styled.element";
 import Navigo from "navigo";
 
-import "../window/main/main";
-import "../window/add-section/add-section";
-import "../window/add-context/add-context";
+import "../window/window";
+import "../modals/add-section/add-section";
+import "../modals/add-context/add-context";
 
 import { appStyles } from "./app.styles";
 

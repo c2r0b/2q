@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { StyledElement } from "../../../../shared/styled.element";
+import { StyledElement } from "../../../shared/styled.element";
 
 import "@carbon/web-components/es/components/pagination/index.js";
 

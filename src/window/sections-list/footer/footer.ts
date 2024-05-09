@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { StyledElement } from "../../../../shared/styled.element";
+import { StyledElement } from "../../../shared/styled.element";
 
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 

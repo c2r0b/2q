@@ -1,30 +1,23 @@
 import { ApolloMutationController } from "@apollo-elements/core";
 import { html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { v4 as uuid } from "uuid";
 import { StyledElement } from "../../shared/styled.element";
-import { Window } from "@tauri-apps/api/window";
 import { emit } from "@tauri-apps/api/event";
 
 import "@carbon/web-components/es/components/button/index.js";
 import "@carbon/web-components/es/components/text-input/index.js";
 import "@carbon/web-components/es/components/textarea/index.js";
+import "@carbon/web-components/es/components/modal/index.js";
 
 import { SendChatMessage } from "../../shared/mutations/SendChatMessage.mutation.graphql";
 import { CreateSections } from "./mutations/CreateSections.mutation.graphql";
 
-export const windowOptions = {
-  url: "/add-section",
-  title: "2Q - Add new section",
-  width: 600,
-  height: 300,
-  x: 0,
-  y: 0,
-  resizable: false,
-};
-
-@customElement("add-section")
+@customElement("modal-add-section")
 export class AddSection extends StyledElement() {
+  @property({ type: Boolean, attribute: "open" })
+  private open: boolean = false;
+
   @state() private sectionTitle: string = "";
   @state() private sectionDescription: string = "";
   @state() private sectionParent: string = "";
@@ -80,9 +73,8 @@ export class AddSection extends StyledElement() {
       return;
     }
 
-    // close the window
     await emit("section-created");
-    Window.getCurrent().close();
+    // TODO: close the dialog
   }
 
   private isLoading() {
@@ -92,10 +84,19 @@ export class AddSection extends StyledElement() {
     );
   }
 
+  private _handleClose() {
+    this.open = false;
+    this.dispatchEvent(new CustomEvent("closed", {}));
+  }
+
   protected render() {
     return html`
-      <modal-container>
-        <modal-form>
+      <cds-modal
+        id="add-section"
+        ?open=${this.open}
+        @cds-modal-closed=${this._handleClose}
+      >
+        <cds-modal-body>
           <div class="flex flex-row gap-3">
             <qui-field label="Title">
               <cds-text-input
@@ -121,8 +122,8 @@ export class AddSection extends StyledElement() {
             ?disabled=${this.isLoading()}
             @new-value=${this._handleDescriptionInput}
           ></cds-textarea>
-        </modal-form>
-        <modal-footer>
+        </cds-modal-body>
+        <cds-modal-footer>
           <cds-button
             aria-label="Save section"
             ?disabled=${this.isLoading()}
@@ -131,8 +132,8 @@ export class AddSection extends StyledElement() {
             Proceed
           </cds-button>
           <qui-loader ?hidden=${!this.isLoading()}></qui-loader>
-        </modal-footer>
-      </modal-container>
+        </cds-modal-footer>
+      </cds-modal>
     `;
   }
 }

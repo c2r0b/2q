@@ -2,7 +2,7 @@ import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/core";
-import { StyledElement } from "../../shared/styled.element";
+import { StyledElement } from "../shared/styled.element";
 
 import "./sections-list";
 import "./section";

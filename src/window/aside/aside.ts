@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { StyledElement } from "../../../shared/styled.element";
+import { StyledElement } from "../../shared/styled.element";
 
 import { asideStyles } from "./aside.styles";
 
@@ -10,7 +10,6 @@ import "@carbon/web-components/es/components/tooltip/index.js";
 
 @customElement("app-aside")
 export class AppAside extends StyledElement(asideStyles) {
-
   protected render() {
     return html`
       <div
@@ -21,9 +20,7 @@ export class AppAside extends StyledElement(asideStyles) {
         >
           My First Context
         </div>
-        <aside-footer>
-          
-        </aside-footer>
+        <aside-footer> </aside-footer>
       </div>
     `;
   }

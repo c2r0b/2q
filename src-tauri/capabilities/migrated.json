@@ -11,8 +11,6 @@
     "resources:default",
     "menu:default",
     "tray:default",
-    "window:allow-create",
-    "webview:allow-create-webview",
     "dialog:allow-confirm"
   ]
 }
