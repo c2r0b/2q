@@ -7,11 +7,11 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 import "./footer";
 
-import "./footer/add.js";
-import "./edit.js";
-import "./delete.js";
+import "./footer/add";
+import "./edit";
+import "./delete";
 
-import { MenuQuery } from "./queries/Menu.query.graphql.js";
+import { MenuQuery } from "./queries/Menu.query.graphql";
 
 @customElement("sections-list-menu")
 export class Menu extends StyledElement() {

@@ -3,7 +3,7 @@ import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
-import { UpdateSections } from "./mutations/UpdateSections.mutation.graphql.js";
+import { UpdateSections } from "./mutations/UpdateSections.mutation.graphql";
 
 import "@carbon/web-components/es/components/button/index.js";
 

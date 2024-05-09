@@ -1,80 +1,80 @@
-import { ApolloQueryController } from '@apollo-elements/core';
-import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { ApolloQueryController } from "@apollo-elements/core";
+import { LitElement, html } from "lit";
+import { customElement, property } from "lit/decorators.js";
 
-import { ListQuery } from './queries/List.query.graphql.js';
+import { ListQuery } from "./queries/List.query.graphql";
 
-import { createColumnHelper } from '@tanstack/table-core';
+import { createColumnHelper } from "@tanstack/table-core";
 
 type Person = {
-  firstName: string
-  lastName: string
-  age: number
-  visits: number
-  status: string
-  progress: number
-}
+  firstName: string;
+  lastName: string;
+  age: number;
+  visits: number;
+  status: string;
+  progress: number;
+};
 
 const defaultData: Person[] = [
   {
-    firstName: 'tanner',
-    lastName: 'linsley',
+    firstName: "tanner",
+    lastName: "linsley",
     age: 24,
     visits: 100,
-    status: 'In Relationship',
+    status: "In Relationship",
     progress: 50,
   },
   {
-    firstName: 'tandy',
-    lastName: 'miller',
+    firstName: "tandy",
+    lastName: "miller",
     age: 40,
     visits: 40,
-    status: 'Single',
+    status: "Single",
     progress: 80,
   },
   {
-    firstName: 'joe',
-    lastName: 'dirte',
+    firstName: "joe",
+    lastName: "dirte",
     age: 45,
     visits: 20,
-    status: 'Complicated',
+    status: "Complicated",
     progress: 10,
   },
-]
+];
 
-const columnHelper = createColumnHelper<Person>()
+const columnHelper = createColumnHelper<Person>();
 
 const columns = [
-  columnHelper.accessor('firstName', {
-    cell: info => info.getValue(),
-    footer: info => info.column.id,
+  columnHelper.accessor("firstName", {
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor(row => row.lastName, {
-    id: 'lastName',
-    cell: info => html`<i>${info.getValue()}</i>`,
+  columnHelper.accessor((row) => row.lastName, {
+    id: "lastName",
+    cell: (info) => html`<i>${info.getValue()}</i>`,
     header: () => html`<span>Last Name</span>`,
-    footer: info => info.column.id,
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('age', {
-    header: () => 'Age',
-    cell: info => info.renderValue(),
-    footer: info => info.column.id,
+  columnHelper.accessor("age", {
+    header: () => "Age",
+    cell: (info) => info.renderValue(),
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('visits', {
+  columnHelper.accessor("visits", {
     header: () => html`<span>Visits</span>`,
-    footer: info => info.column.id,
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('status', {
-    header: 'Status',
-    footer: info => info.column.id,
+  columnHelper.accessor("status", {
+    header: "Status",
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('progress', {
-    header: 'Profile Progress',
-    footer: info => info.column.id,
+  columnHelper.accessor("progress", {
+    header: "Profile Progress",
+    footer: (info) => info.column.id,
   }),
 ];
 
-@customElement('entries-list')
+@customElement("entries-list")
 export class List extends LitElement {
   @property({}) set sectionId(id: String) {
     this._sectionId = id;
@@ -83,14 +83,14 @@ export class List extends LitElement {
   private _sectionId: String = "";
 
   query = new ApolloQueryController(this, ListQuery, {
-    variables: this.getVariables()
+    variables: this.getVariables(),
   });
 
   private getVariables() {
     return {
       where: {
-        id: this._sectionId
-      }
+        id: this._sectionId,
+      },
     };
   }
 
@@ -114,45 +114,37 @@ export class List extends LitElement {
         <table>
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
+            <tr key="{headerGroup.id}">
+              {headerGroup.headers.map(header => (
+              <th key="{header.id}">
+                {header.isPlaceholder ? null : flexRender(
+                header.column.columnDef.header, header.getContext() )}
+              </th>
+              ))}
+            </tr>
             ))}
           </thead>
           <tbody>
             {table.getRowModel().rows.map(row => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map(cell => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
+            <tr key="{row.id}">
+              {row.getVisibleCells().map(cell => (
+              <td key="{cell.id}">
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+              ))}
+            </tr>
             ))}
           </tbody>
           <tfoot>
             {table.getFooterGroups().map(footerGroup => (
-              <tr key={footerGroup.id}>
-                {footerGroup.headers.map(header => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
+            <tr key="{footerGroup.id}">
+              {footerGroup.headers.map(header => (
+              <th key="{header.id}">
+                {header.isPlaceholder ? null : flexRender(
+                header.column.columnDef.footer, header.getContext() )}
+              </th>
+              ))}
+            </tr>
             ))}
           </tfoot>
         </table>

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
     "declaration": false,
     "downlevelIteration": true,
     "esModuleInterop": true,

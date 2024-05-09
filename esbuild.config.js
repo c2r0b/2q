@@ -20,12 +20,7 @@ Object.entries(keys).forEach(([key, value]) => {
 
 export const buildConfig = (isDev) => {
 	return isDev ? {
-		ts: true,
 		tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
-		loaders: {
-			'.scss': 'css',
-			'.css': 'css',
-		},
 		define
 	} : {
 		tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),

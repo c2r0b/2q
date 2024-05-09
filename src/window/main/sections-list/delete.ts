@@ -4,7 +4,7 @@ import { customElement, property } from "lit/decorators.js";
 import { confirm } from "@tauri-apps/plugin-dialog";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 
-import { DeleteSections } from "./mutations/DeleteSections.mutation.graphql.js";
+import { DeleteSections } from "./mutations/DeleteSections.mutation.graphql";
 
 import "@carbon/web-components/es/components/button/index.js";
 

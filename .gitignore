@@ -13,4 +13,5 @@ src/**/*.d.ts
 src/**/*.graphql.ts
 src/schema.ts
 build/
+dist/
 src-tauri/binaries/

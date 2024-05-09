@@ -1,7 +1,12 @@
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: 'Inter var', 'Roboto', arial, sans-serif;
   color: var(--on-background);
   background: var(--background);
+  margin: 0;
 }
 
 :root {

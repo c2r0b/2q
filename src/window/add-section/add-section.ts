@@ -10,8 +10,8 @@ import "@carbon/web-components/es/components/button/index.js";
 import "@carbon/web-components/es/components/text-input/index.js";
 import "@carbon/web-components/es/components/textarea/index.js";
 
-import { SendChatMessage } from "../../shared/mutations/SendChatMessage.mutation.graphql.js";
-import { CreateSections } from "./mutations/CreateSections.mutation.graphql.js";
+import { SendChatMessage } from "../../shared/mutations/SendChatMessage.mutation.graphql";
+import { CreateSections } from "./mutations/CreateSections.mutation.graphql";
 
 export const windowOptions = {
   url: "/add-section",

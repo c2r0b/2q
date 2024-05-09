@@ -6,13 +6,13 @@
       "type": "npm",
       "isBackground": true,
       "script": "dev",
-      "problemMatcher": [],
+      "problemMatcher": []
     },
     {
       "label": "ui:build",
       "type": "npm",
       "script": "build",
-      "problemMatcher": [],
+      "problemMatcher": []
     }
   ]
 }
