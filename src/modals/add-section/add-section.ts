@@ -74,7 +74,9 @@ export class AddSection extends StyledElement() {
     }
 
     await emit("section-created");
+
     this._handleClose();
+    this.clearInputs();
   }
 
   private isLoading() {
@@ -82,6 +84,11 @@ export class AddSection extends StyledElement() {
       this.sendChatMessageMutation.loading ||
       this.createSectionsMutation.loading
     );
+  }
+
+  private clearInputs() {
+    this.sectionTitle = "";
+    this.sectionDescription = "";
   }
 
   private _handleClose() {
@@ -125,6 +132,7 @@ export class AddSection extends StyledElement() {
           </div>
           <cds-textarea
             placeholder="Create a new section to..."
+            value=${this.sectionDescription}
             ?disabled=${this.isLoading()}
             @input=${this._handleDescriptionInput}
           ></cds-textarea>
