@@ -2,6 +2,7 @@ import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { listen } from "@tauri-apps/api/event";
+import { t } from "src/locales";
 
 import "@carbon/web-components/es/components/icon-button/index.js";
 
@@ -29,13 +30,13 @@ export class AddButton extends LitElement {
   protected render() {
     return html`
       <cds-icon-button
-        aria-label="Add new section"
+        aria-label=${t("addNewSection")}
         kind="ghost"
         size="lg"
         @click="${this._handleAddClick}"
       >
         <fa-icon .icon=${faPlus}></fa-icon>
-        <span slot="tooltip-content">Add new section</span>
+        <span slot="tooltip-content">${t("addNewSection")}</span>
       </cds-icon-button>
       <modal-add-section
         ?open=${this.open}

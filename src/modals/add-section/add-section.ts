@@ -4,6 +4,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { v4 as uuid } from "uuid";
 import { StyledElement } from "../../shared/styled.element";
 import { emit } from "@tauri-apps/api/event";
+import { t } from "src/locales";
 
 import "@carbon/web-components/es/components/button/index.js";
 import "@carbon/web-components/es/components/text-input/index.js";
@@ -106,14 +107,14 @@ export class AddSection extends StyledElement() {
       >
         <cds-modal-header>
           <cds-modal-close-button></cds-modal-close-button>
-          <cds-modal-label>Sections</cds-modal-label>
-          <cds-modal-heading>Add a custom section</cds-modal-heading>
+          <cds-modal-label>${t("sections")}</cds-modal-label>
+          <cds-modal-heading>${t("addCustomSection")}</cds-modal-heading>
         </cds-modal-header>
         <cds-modal-body>
           <div class="flex flex-row gap-3">
             <qui-field label="Title">
               <cds-text-input
-                placeholder="Section title"
+                placeholder=${t("sectionTitlePlaceholder")}
                 ?disabled=${this.isLoading()}
                 value=${this.sectionTitle}
                 @input=${this._handleTitleInput}
@@ -131,7 +132,7 @@ export class AddSection extends StyledElement() {
             </cds-select>
           </div>
           <cds-textarea
-            placeholder="Create a new section to..."
+            placeholder=${t("sectionDescriptionPlaceholder")}
             value=${this.sectionDescription}
             ?disabled=${this.isLoading()}
             @input=${this._handleDescriptionInput}
@@ -139,11 +140,11 @@ export class AddSection extends StyledElement() {
         </cds-modal-body>
         <cds-modal-footer>
           <cds-button
-            aria-label="Save section"
+            aria-label=${t("proceed")}
             ?disabled=${this.isLoading()}
             @click=${() => this._handleProceed()}
           >
-            Proceed
+            ${t("proceed")}
           </cds-button>
           <qui-loader ?hidden=${!this.isLoading()}></qui-loader>
         </cds-modal-footer>

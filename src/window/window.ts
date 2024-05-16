@@ -4,6 +4,8 @@ import { listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/core";
 import { StyledElement } from "../shared/styled.element";
 
+import { t, TranslationKey } from "src/locales";
+
 import "./sections-list";
 import "./section-content";
 
@@ -11,14 +13,14 @@ import "./section-content";
 export class MainWindow extends StyledElement() {
   @state() private dbAvailable: boolean = false;
   @state() private sectionId: string = "";
-  @state() private status: string = "Loading";
+  @state() private status: TranslationKey = "loading";
 
   // initialize database on startup (if setup is not needed)
   async init() {
-    this.status = "Getting ready ...";
+    this.status = "gettingReady";
 
     const retryTimeout = setTimeout(() => {
-      if (!this.dbAvailable) this.status = "Retrying ...";
+      if (!this.dbAvailable) this.status = "retrying";
     }, 5000);
 
     const unlisten = await listen("db-initialized", () => {
@@ -28,7 +30,7 @@ export class MainWindow extends StyledElement() {
     });
 
     invoke("init_db").then(async () => {
-      this.status = "Almost there ...";
+      this.status = "almostThere";
     });
   }
 
@@ -48,7 +50,7 @@ export class MainWindow extends StyledElement() {
         <div
           class="w-full h-full flex items-center justify-center text-xl font-bold"
         >
-          <p>${this.status}</p>
+          <p>${t(this.status)}...</p>
         </div>
       `;
     }

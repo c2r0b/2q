@@ -1,0 +1,14 @@
+{
+  "loading": "Loading",
+  "gettingReady": "Getting ready",
+  "retrying": "Retrying",
+  "almostThere": "Almost there",
+  "filterSections": "Filter sections",
+  "addNewSection": "Add new section",
+  "refresh": "Refresh",
+  "sections": "Sections",
+  "addCustomSection": "Add a custom section",
+  "sectionTitlePlaceholder": "Section title",
+  "sectionDescriptionPlaceholder": "Create a new section to...",
+  "proceed": "Proceed"
+}

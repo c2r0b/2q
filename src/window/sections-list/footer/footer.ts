@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { StyledElement } from "../../../shared/styled.element";
-
+import { t } from "src/locales";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 
 import "@carbon/web-components/es/components/search/index.js";
@@ -31,20 +31,20 @@ export class SectionsListFooter extends StyledElement() {
           label-text="Search"
           type="text"
           size="lg"
-          placeholder="Filter sections"
+          placeholder=${t("filterSections")}
           value=${this.sectionTitle}
           @cds-search-input=${this._handleFilterInput}
         ></cds-search>
 
         <cds-icon-button
-          aria-label="Refresh sections"
+          aria-label=${t("refresh")}
           action="flat-inline"
           size="lg"
           kind="ghost"
           @click=${this._handleRefresh}
         >
           <fa-icon .icon=${faSync}></fa-icon>
-          <span slot="tooltip-content">Refresh</span>
+          <span slot="tooltip-content">${t("refresh")}</span>
         </cds-icon-button>
 
         <add-btn @add="${this._handleRefresh}"></add-btn>

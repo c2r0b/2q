@@ -1,6 +1,7 @@
 import { buildConfig } from "./esbuild.config.js";
 import * as Sass from "sass-embedded";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 import postcss from "postcss";
 import postcssNesting from "postcss-nesting";
@@ -65,6 +66,7 @@ export default {
   },
   resolve: {
     extensions: [".ts", ".js"],
+    plugins: [new TsconfigPathsPlugin()],
   },
   plugins: [
     new HtmlWebpackPlugin({

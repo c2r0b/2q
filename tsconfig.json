@@ -14,8 +14,9 @@
     "target": "esnext",
     "useDefineForClassFields": false,
     "resolveJsonModule": true,
+    "baseUrl": ".",
     "paths": {
-      "src": ["/src/"]
+      "src/*": ["./src/*"]
     },
     "lib": [
       "DOM.iterable",
