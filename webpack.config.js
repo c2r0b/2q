@@ -39,7 +39,13 @@ export default {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.scss$/,
+        // only scss files under /src/styles
+        test: /src\/styles\/.*\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        // only scss under /src/shared
+        test: /src\/shared\/.*\.scss$/,
         loader: "lit-css-loader",
         options: {
           // Use Sass to process Carbon and PostCSS for Tailwind

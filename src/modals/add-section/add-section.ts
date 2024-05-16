@@ -26,11 +26,11 @@ export class AddSection extends StyledElement() {
   createSectionsMutation = new ApolloMutationController(this, CreateSections);
 
   private _handleTitleInput(e) {
-    this.sectionTitle = (e.detail.value as string) || "";
+    this.sectionTitle = (e.target.value as string) || "";
   }
 
   private _handleDescriptionInput(e) {
-    this.sectionDescription = (e.detail.value as string) || "";
+    this.sectionDescription = (e.target.value as string) || "";
   }
 
   private async _handleProceed() {
@@ -103,7 +103,7 @@ export class AddSection extends StyledElement() {
                 placeholder="Section title"
                 ?disabled=${this.isLoading()}
                 value=${this.sectionTitle}
-                @new-value=${this._handleTitleInput}
+                @input=${this._handleTitleInput}
               ></cds-text-input>
             </qui-field>
             <qui-field label="Icon">
@@ -120,7 +120,7 @@ export class AddSection extends StyledElement() {
           <cds-textarea
             placeholder="Create a new section to..."
             ?disabled=${this.isLoading()}
-            @new-value=${this._handleDescriptionInput}
+            @input=${this._handleDescriptionInput}
           ></cds-textarea>
         </cds-modal-body>
         <cds-modal-footer>

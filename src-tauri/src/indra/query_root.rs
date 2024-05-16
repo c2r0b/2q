@@ -2,7 +2,7 @@ use async_graphql::{Context, Object};
 use indradb::{Datastore, Identifier, QueryOutputValue, RangeVertexQuery, Transaction};
 
 use crate::indra::database::Database;
-use crate::schema::section::{Section, SectionFilter};
+use crate::schema::section::{Section, SectionWhere};
 
 pub struct QueryRoot;
 
@@ -12,7 +12,7 @@ impl QueryRoot {
         false
     }
 
-    async fn sections(&self, ctx: &Context<'_>, r#where: Option<SectionFilter>) -> Vec<Section> {
+    async fn sections(&self, ctx: &Context<'_>, r#where: Option<SectionWhere>) -> Vec<Section> {
         let data = ctx.data::<Database>().unwrap();
         let store: std::sync::Arc<indradb::Database<indradb::MemoryDatastore>> = data.graph.clone();
 

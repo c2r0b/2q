@@ -6,8 +6,8 @@ use serde::{Deserialize, Serialize};
 use crate::arangodb::conn::get_conn;
 use crate::gpt::chat::send_chat_message;
 use crate::schema::section::{
-    CreateResults, DeleteResults, Info, SectionCreateInput, SectionUpdateInput, SectionWhere,
-    UpdateResults,
+    CreateResults, DeleteResults, Info, SectionCreateInput, SectionDeleteWhere, SectionUpdateInput,
+    SectionUpdateWhere, UpdateResults,
 };
 
 #[derive(Serialize, Deserialize)]
@@ -66,7 +66,7 @@ impl MutationRoot {
     async fn delete_sections(
         &self,
         _ctx: &Context<'_>,
-        r#where: SectionWhere,
+        r#where: SectionDeleteWhere,
     ) -> FieldResult<DeleteResults> {
         let conn = get_conn().await?;
         let db = conn.db("toq").await.unwrap();
@@ -82,7 +82,7 @@ impl MutationRoot {
     async fn update_sections(
         &self,
         _ctx: &Context<'_>,
-        r#where: SectionWhere,
+        r#where: SectionUpdateWhere,
         update: SectionUpdateInput,
     ) -> FieldResult<UpdateResults> {
         let conn = get_conn().await?;

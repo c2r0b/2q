@@ -23,7 +23,7 @@ type Query {
 }
 
 input SectionWhere {
-  title: String
+  id: ID!
 }
 
 type CreateInfo {
@@ -40,7 +40,10 @@ type DeleteResults {
 
 type Mutation {
   createSections(input: [SectionCreateInput]): CreateResults
-  updateSections(where: SectionUpdateWhere, update: SectionUpdateInput): CreateResults
+  updateSections(
+    where: SectionUpdateWhere
+    update: SectionUpdateInput
+  ): CreateResults
   deleteSections(where: SectionDeleteWhere): DeleteResults
   sendChatMessage(message: String!): String
 }

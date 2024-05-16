@@ -1,7 +1,7 @@
 import { ApolloClientElement } from "@apollo-elements/components/apollo-client";
 import { client } from "./client";
 
-import './style.css';
+import "./styles/global.scss";
 
 // icons setup
 import { FontAwesomeIcon } from "@riovir/wc-fontawesome";

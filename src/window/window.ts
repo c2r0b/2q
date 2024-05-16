@@ -5,8 +5,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { StyledElement } from "../shared/styled.element";
 
 import "./sections-list";
-import "./section";
-import "./aside";
+import "./section-content";
 
 @customElement("main-window")
 export class MainWindow extends StyledElement() {
@@ -56,8 +55,6 @@ export class MainWindow extends StyledElement() {
 
     return html`
       <div class="flex h-full bg-gray-50 dark:bg-gray-900">
-        <app-aside></app-aside>
-
         <sections-list-menu
           @sectionChange="${this._handleSectionChange}"
         ></sections-list-menu>

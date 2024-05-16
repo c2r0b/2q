@@ -46,9 +46,10 @@ pub struct DeleteResults {
     pub nodes_deleted: i32,
 }
 
-#[derive(InputObject)]
+#[derive(InputObject, Debug)]
 pub struct SectionWhere {
-    pub id: String,
+    pub title: Option<String>,
+    pub id: Option<String>,
 }
 
 #[derive(InputObject)]
@@ -64,10 +65,4 @@ pub struct SectionDeleteWhere {
 #[derive(InputObject)]
 pub struct SectionUpdateInput {
     pub title: String,
-}
-
-#[derive(InputObject, Debug)]
-pub struct SectionFilter {
-    pub title: Option<String>,
-    pub id: Option<String>,
 }

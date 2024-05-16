@@ -2,7 +2,7 @@ use arangors::Document;
 use async_graphql::{Context, Object};
 
 use crate::arangodb::conn::get_conn;
-use crate::schema::section::{Section, SectionFilter};
+use crate::schema::section::{Section, SectionWhere};
 
 pub struct QueryRoot;
 
@@ -12,7 +12,7 @@ impl QueryRoot {
         true
     }
 
-    async fn sections(&self, _ctx: &Context<'_>, r#where: Option<SectionFilter>) -> Vec<Section> {
+    async fn sections(&self, _ctx: &Context<'_>, r#where: Option<SectionWhere>) -> Vec<Section> {
         let conn = get_conn().await.unwrap();
         let db = conn.db("toq").await.unwrap();
 

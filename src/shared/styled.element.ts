@@ -1,10 +1,10 @@
 import { LitElement, unsafeCSS } from "lit";
 
-import globalStyles from "./styled.global.scss";
+import globalStyles from "./styled.element.scss";
 
 export const StyledElement = (style = undefined) => {
   return class extends LitElement {
-    static styles = style
+    static readonly styles = style
       ? [unsafeCSS(globalStyles), unsafeCSS(style)]
       : [unsafeCSS(globalStyles)];
   };

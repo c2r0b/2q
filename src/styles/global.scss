@@ -1,3 +1,6 @@
+@use '@carbon/themes/scss/themes';
+@use '@carbon/themes/scss/theme';
+
 html, body {
   height: 100%;
 }
@@ -12,6 +15,7 @@ body {
 :root {
   --background: #fefefe;
   --on-background: #222;
+  @include theme.theme(themes.$g10);
 }
 
 main, #window {
@@ -22,5 +26,6 @@ main, #window {
   :root {
     --background: #222;
     --on-background: #fefefe;
+    @include theme.theme(themes.$g100);
   }
 }
