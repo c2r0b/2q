@@ -74,7 +74,7 @@ export class AddSection extends StyledElement() {
     }
 
     await emit("section-created");
-    // TODO: close the dialog
+    this._handleClose();
   }
 
   private isLoading() {
@@ -92,10 +92,16 @@ export class AddSection extends StyledElement() {
   protected render() {
     return html`
       <cds-modal
-        id="add-section"
         ?open=${this.open}
+        full-width
         @cds-modal-closed=${this._handleClose}
+        class="bg-white dark:bg-gray-800"
       >
+        <cds-modal-header>
+          <cds-modal-close-button></cds-modal-close-button>
+          <cds-modal-label>Sections</cds-modal-label>
+          <cds-modal-heading>Add a custom section</cds-modal-heading>
+        </cds-modal-header>
         <cds-modal-body>
           <div class="flex flex-row gap-3">
             <qui-field label="Title">
