@@ -5,11 +5,13 @@ use serde::{Deserialize, Serialize};
 
 use crate::arangodb::conn::get_conn;
 use crate::gpt::chat::send_chat_message;
+use crate::schema::column::ColumnCreateInput;
+use crate::schema::results::{CreateResults, DeleteResults, Info, UpdateResults};
 use crate::schema::section::{
-    CreateResults, DeleteResults, Info, SectionCreateInput, SectionDeleteWhere, SectionUpdateInput,
-    SectionUpdateWhere, UpdateResults,
+    SectionCreateInput, SectionDeleteWhere, SectionUpdateInput, SectionUpdateWhere,
 };
 
+// TODO: remove
 #[derive(Serialize, Deserialize)]
 struct Section {
     _key: String,
@@ -17,6 +19,16 @@ struct Section {
     id: String,
     title: String,
     description: String,
+}
+
+// TODO: remove
+#[derive(Serialize, Deserialize)]
+struct Column {
+    _key: String,
+    _id: String,
+    id: String,
+    section_id: String,
+    title: String,
 }
 
 pub struct MutationRoot;
@@ -36,7 +48,6 @@ impl MutationRoot {
         _ctx: &Context<'_>,
         input: Vec<SectionCreateInput>,
     ) -> FieldResult<CreateResults> {
-        //TODO: let db = ctx.data::<Database<Connection>>()?;
         let db = get_conn().await?.db("toq").await.unwrap();
         let collection = db.collection("Section").await.unwrap();
         let mut nodes_created = 0;
@@ -57,6 +68,37 @@ impl MutationRoot {
         }
 
         let nodes_created = input.len() as i32;
+        let info = Info { nodes_created };
+        let result = CreateResults { info };
+
+        Ok(result)
+    }
+
+    async fn create_columns(
+        &self,
+        _ctx: &Context<'_>,
+        input: Vec<ColumnCreateInput>,
+    ) -> FieldResult<CreateResults> {
+        let db = get_conn().await?.db("toq").await.unwrap();
+        let collection = db.collection("Column").await.unwrap();
+        let mut nodes_created = 0;
+
+        for column in input.clone() {
+            let document = Document::new(Column {
+                _key: column.id.clone(),
+                _id: "".to_string(),
+                id: column.id.clone(),
+                section_id: column.section_id.clone(),
+                title: column.title.clone(),
+            });
+            let _ = collection
+                .create_document(document, InsertOptions::default())
+                .await
+                .unwrap();
+            nodes_created += 1;
+        }
+
+        let nodes_created = 0;
         let info = Info { nodes_created };
         let result = CreateResults { info };
 

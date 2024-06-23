@@ -13,6 +13,7 @@ import "@carbon/web-components/es/components/modal/index.js";
 
 import { SendChatMessage } from "../../shared/mutations/SendChatMessage.mutation.graphql";
 import { CreateSections } from "./mutations/CreateSections.mutation.graphql";
+import { CreateColumns } from "./mutations/CreateColumns.mutation.graphql";
 
 @customElement("modal-add-section")
 export class AddSection extends StyledElement() {
@@ -25,6 +26,7 @@ export class AddSection extends StyledElement() {
 
   sendChatMessageMutation = new ApolloMutationController(this, SendChatMessage);
   createSectionsMutation = new ApolloMutationController(this, CreateSections);
+  createColumnsMutation = new ApolloMutationController(this, CreateColumns);
 
   private _handleTitleInput(e) {
     this.sectionTitle = (e.target.value as string) || "";
@@ -46,7 +48,7 @@ export class AddSection extends StyledElement() {
 
     // generate mutation from gpt
     this.sendChatMessageMutation.variables = {
-      message: this.sectionDescription,
+      message: `Column names for a table the manages this: ${this.sectionDescription}. Reply with comma separated column names, e.g.: name,age`,
     };
     let chatReply;
     try {
@@ -58,12 +60,13 @@ export class AddSection extends StyledElement() {
     }
 
     // add section to the database
+    const sectionId = uuid();
     this.createSectionsMutation.variables = {
       input: [
         {
-          id: uuid(),
+          id: sectionId,
           title: this.sectionTitle,
-          description: chatReply,
+          description: this.sectionDescription
         },
       ],
     };
@@ -74,6 +77,26 @@ export class AddSection extends StyledElement() {
       return;
     }
 
+    // parse column names
+    const columns = chatReply.split(",").map((name) => ({
+      id: uuid(),
+      sectionId: sectionId,
+      title: name.trim(),
+    }));
+
+    console.log(columns)
+
+    // add columns to the database
+    this.createColumnsMutation.variables = {
+      input: columns,
+    };
+    try {
+      await this.createColumnsMutation.mutate();
+    } catch (e) {
+      alert("Failed to create columns: " + e.message);
+      return;
+    }
+    
     await emit("section-created");
 
     this._handleClose();

@@ -2,15 +2,20 @@ use async_graphql::{InputObject, Object, SimpleObject};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize)]
-pub struct Section {
+pub struct Column {
     pub id: String,
+    pub section_id: String,
     pub title: String,
 }
 
 #[Object]
-impl Section {
+impl Column {
     async fn id(&self) -> &str {
         &self.id
+    }
+
+    async fn section_id(&self) -> &str {
+        &self.section_id
     }
 
     async fn title(&self) -> &str {
@@ -19,29 +24,15 @@ impl Section {
 }
 
 #[derive(InputObject, Clone, Serialize, Deserialize)]
-pub struct SectionCreateInput {
+pub struct ColumnCreateInput {
     pub id: String,
+    pub section_id: String,
     pub title: String,
-    pub description: String,
 }
 
 #[derive(InputObject, Debug)]
-pub struct SectionWhere {
+pub struct ColumnWhere {
+    pub section_id: Option<String>,
     pub title: Option<String>,
     pub id: Option<String>,
-}
-
-#[derive(InputObject)]
-pub struct SectionUpdateWhere {
-    pub id: String,
-}
-
-#[derive(InputObject)]
-pub struct SectionDeleteWhere {
-    pub id: String,
-}
-
-#[derive(InputObject)]
-pub struct SectionUpdateInput {
-    pub title: String,
 }

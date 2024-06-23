@@ -2,6 +2,7 @@ use async_graphql::{Context, Object};
 use neo4rs::*;
 
 use crate::neo4j::database::Database;
+use crate::schema::column::{Column, ColumnWhere};
 use crate::schema::section::{Section, SectionWhere};
 
 pub struct QueryRoot;
@@ -44,5 +45,45 @@ impl QueryRoot {
         }
 
         sections
+    }
+
+    // get columns starting from a section_id
+    async fn columns(&self, ctx: &Context<'_>, r#where: Option<ColumnWhere>) -> Vec<Column> {
+        let data = ctx.data::<Database>().unwrap();
+        let graph = data.graph.clone();
+
+        let cypher_query = match &r#where {
+            Some(filter) => {
+                let mut query = "MATCH (c:Column)".to_string();
+                if let Some(s) = &filter.section_id {
+                    query = format!("{} WHERE c.section_id = '{}'", query, s);
+                }
+                if let Some(t) = &filter.title {
+                    query = format!("{} WHERE toLower(c.title) CONTAINS toLower('{}')", query, t);
+                }
+                query.push_str(" RETURN c");
+                query
+            }
+            None => "MATCH (c:Column) RETURN c".to_string(),
+        };
+
+        let mut result = graph.execute(query(&cypher_query)).await.unwrap();
+
+        let mut columns = vec![];
+
+        while let Ok(Some(row)) = result.next().await {
+            let node: Node = row.get("c").unwrap();
+            let id: String = node.get("id").unwrap();
+            let section_id: String = node.get("section_id").unwrap();
+            let title: String = node.get("title").unwrap();
+
+            columns.push(Column {
+                id,
+                section_id,
+                title,
+            });
+        }
+
+        columns
     }
 }

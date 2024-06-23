@@ -1,0 +1,7 @@
+mutation CreateColumns($input: [ColumnCreateInput!]!) {
+  createColumns(input: $input) {
+    info {
+      nodesCreated
+    }
+  }
+}

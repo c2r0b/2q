@@ -33,7 +33,6 @@ TODO
 ### Start
 	npm install
 	npm run tauri dev
-	npm run storybook # optional (component library)
 
 ### Environment variables
 `.env` files are used to store environment variables. Settings example:

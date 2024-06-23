@@ -2,6 +2,7 @@ use arangors::Document;
 use async_graphql::{Context, Object};
 
 use crate::arangodb::conn::get_conn;
+use crate::schema::column::{Column, ColumnWhere};
 use crate::schema::section::{Section, SectionWhere};
 
 pub struct QueryRoot;
@@ -48,5 +49,48 @@ impl QueryRoot {
         }
 
         sections
+    }
+
+    async fn columns(&self, _ctx: &Context<'_>, r#where: Option<ColumnWhere>) -> Vec<Column> {
+        let conn = get_conn().await.unwrap();
+        let db = conn.db("toq").await.unwrap();
+
+        // create collection if it doesn't exist
+        if db.collection("Column").await.is_err() {
+            let _ = db.create_collection("Column").await.unwrap();
+        }
+
+        let query = match &r#where {
+            Some(filter) => {
+                let mut query = "FOR c IN Column".to_string();
+                if let Some(s) = &filter.section_id {
+                    query = format!("{} FILTER c.section_id == '{}'", query, s);
+                }
+                if let Some(t) = &filter.title {
+                    query = format!("{} FILTER CONTAINS(LOWER(c.title), LOWER('{}'))", query, t);
+                }
+                query.push_str(" RETURN c");
+                query
+            }
+            None => "FOR c IN Column RETURN c".to_string(),
+        };
+
+        let cursor: Vec<Document<Column>> = db.aql_str(&query).await.unwrap();
+
+        let mut columns = vec![];
+
+        for doc in cursor {
+            let id = doc.document.id.clone();
+            let section_id = doc.document.section_id.clone();
+            let title = doc.document.title.clone();
+
+            columns.push(Column {
+                id,
+                section_id,
+                title,
+            });
+        }
+
+        columns
     }
 }

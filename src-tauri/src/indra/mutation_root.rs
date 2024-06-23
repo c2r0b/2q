@@ -2,9 +2,10 @@ use async_graphql::{Context, FieldResult, Object};
 
 use crate::gpt::chat::send_chat_message;
 use crate::indra::database::Database;
+use crate::schema::column::ColumnCreateInput;
+use crate::schema::results::{CreateResults, DeleteResults, Info, UpdateResults};
 use crate::schema::section::{
-    CreateResults, DeleteResults, Info, SectionCreateInput, SectionDeleteWhere, SectionUpdateInput,
-    SectionUpdateWhere, UpdateResults,
+    SectionCreateInput, SectionDeleteWhere, SectionUpdateInput, SectionUpdateWhere,
 };
 use indradb::{BulkInsertItem, Identifier, Json, SpecificVertexQuery, Vertex};
 use uuid::Uuid;
@@ -44,6 +45,44 @@ impl MutationRoot {
             );
 
             store.bulk_insert(vec![vertex, property]);
+            nodes_created += 1;
+        }
+
+        Ok(CreateResults {
+            info: Info { nodes_created },
+        })
+    }
+
+    // create columns for a section
+    async fn create_columns(
+        &self,
+        ctx: &Context<'_>,
+        input: Vec<ColumnCreateInput>,
+    ) -> FieldResult<CreateResults> {
+        let data = ctx.data::<Database>()?;
+        let store = data.graph.clone();
+
+        let vertex_type = Identifier::new("Column")?;
+
+        let mut nodes_created = 0;
+
+        for column in input {
+            let uuid = Uuid::parse_str(&column.id)?;
+            let vertex = BulkInsertItem::Vertex(Vertex::with_id(uuid, vertex_type));
+
+            let title = BulkInsertItem::VertexProperty(
+                uuid,
+                Identifier::new("title")?,
+                Json::new(serde_json::Value::String(column.title.clone())),
+            );
+
+            let section_id = BulkInsertItem::VertexProperty(
+                uuid,
+                Identifier::new("section_id")?,
+                Json::new(serde_json::Value::String(column.section_id.clone())),
+            );
+
+            store.bulk_insert(vec![vertex, title, section_id]);
             nodes_created += 1;
         }
 

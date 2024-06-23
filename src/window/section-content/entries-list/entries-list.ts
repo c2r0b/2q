@@ -3,24 +3,28 @@ import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 
-import { ListQuery } from "./queries/List.query.graphql";
+import { SectionQuery } from "./queries/Section.query.graphql";
+import { ColumnsQuery } from "./queries/Columns.query.graphql";
 
 import "@carbon/web-components/es/components/data-table/index.js";
 
 @customElement("entries-list")
 export class List extends LitElement {
   @property({}) set sectionId(id: string) {
-    console.log("sectionId2", id);
     this._sectionId = id;
     this.updateData();
   }
   @state() _sectionId: string = "";
 
-  query = new ApolloQueryController(this, ListQuery, {
-    variables: this.getVariables(),
+  sectionQuery = new ApolloQueryController(this, SectionQuery, {
+    variables: this.getSectionQueryParams(),
   });
 
-  private getVariables() {
+  columnsQuery = new ApolloQueryController(this, ColumnsQuery, {
+    variables: this.getColumnsQueryParams(),
+  });
+
+  private getSectionQueryParams() {
     return {
       where: {
         id: this._sectionId,
@@ -28,17 +32,27 @@ export class List extends LitElement {
     };
   }
 
+  private getColumnsQueryParams() {
+    return {
+      where: {
+        sectionId: this._sectionId,
+      },
+    };
+  }
+
   private updateData() {
-    this.query.refetch(this.getVariables());
+    this.sectionQuery.refetch(this.getSectionQueryParams());
+    this.columnsQuery.refetch(this.getColumnsQueryParams());
   }
 
   protected render() {
-    const sub = this.query?.data?.sections[0];
+    const section = this.sectionQuery?.data?.sections[0];
+    const columns = this.columnsQuery?.data?.columns;
 
     return html`
       <cds-table is-sortable>
         <cds-table-header-title slot="title"
-          >${sub?.title}</cds-table-header-title
+          >${section?.title}</cds-table-header-title
         >
         <cds-table-header-description slot="description"
           >${this._sectionId}</cds-table-header-description
@@ -63,12 +77,11 @@ export class List extends LitElement {
 
         <cds-table-head>
           <cds-table-header-row>
-            <cds-table-header-cell>Name</cds-table-header-cell>
-            <cds-table-header-cell>Protocol</cds-table-header-cell>
-            <cds-table-header-cell>Port</cds-table-header-cell>
-            <cds-table-header-cell>Rule</cds-table-header-cell>
-            <cds-table-header-cell>Attached groups</cds-table-header-cell>
-            <cds-table-header-cell>Status</cds-table-header-cell>
+          ${columns.map((s) => {
+            return html`
+              <cds-table-header>${s.title}</cds-table-header>
+            `;
+          })}
           </cds-table-header-row>
         </cds-table-head>
         <cds-table-body>

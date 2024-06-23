@@ -1,0 +1,6 @@
+query ColumnsQuery($sectionId: String) {
+  columns(where: { sectionId: $sectionId }) {
+    id
+    title
+  }
+}
